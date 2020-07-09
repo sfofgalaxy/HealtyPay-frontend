@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">健康付</string>
+    <string name="title_qrCode">二维码</string>
+    <string name="title_nfc">NFC</string>
+    <string name="title_service">服务</string>
+    <string name="title_my">我</string>
+</resources>

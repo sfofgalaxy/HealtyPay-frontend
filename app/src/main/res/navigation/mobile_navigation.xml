@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_qrCode">
+
+    <fragment
+        android:id="@+id/navigation_qrCode"
+        android:name="com.example.myapplication.ui.qrCode.QRCodeFragment"
+        android:label="@string/title_qrCode"
+        tools:layout="@layout/fragment_qrcode" />
+
+    <fragment
+        android:id="@+id/navigation_nfc"
+        android:name="com.example.myapplication.ui.nfc.NFCFragment"
+        android:label="@string/title_nfc"
+        tools:layout="@layout/fragment_nfc" />
+
+    <fragment
+        android:id="@+id/navigation_service"
+        android:name="com.example.myapplication.ui.service.ServiceFragment"
+        android:label="@string/title_service"
+        tools:layout="@layout/fragment_service" />
+
+    <fragment
+        android:id="@+id/navigation_my"
+        android:name="com.example.myapplication.ui.my.MyFragment"
+        android:label="@string/title_my"
+        tools:layout="@layout/fragment_my" />
+</navigation>
