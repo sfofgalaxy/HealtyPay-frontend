@@ -6,7 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.my.MyFragment"
     android:orientation="vertical"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:name=".CommentActivity"
+    android:screenOrientation="portrait"
+    android:theme="@style/Theme.ched">
 
     <!--    头像-->
     <LinearLayout

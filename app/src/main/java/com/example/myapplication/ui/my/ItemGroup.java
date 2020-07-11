@@ -82,7 +82,7 @@ public class ItemGroup extends FrameLayout{
 //        String hintContent = typedArray.getString(R.styleable.ItemGroup_edt_hint_content);
 //        int hintColor = typedArray.getColor(R.styleable.ItemGroup_edt_hint_text_color, defaultHintColor);
         //默认输入框可以编辑
-        boolean isEditable = typedArray.getBoolean(R.styleable.ItemGroup_isEditable, true);
+//        boolean isEditable = typedArray.getBoolean(R.styleable.ItemGroup_isEditable, true);
         //向右的箭头图标是否可见，默认可见
         boolean showJtIcon = typedArray.getBoolean(R.styleable.ItemGroup_jt_visible, true);
         typedArray.recycle();
