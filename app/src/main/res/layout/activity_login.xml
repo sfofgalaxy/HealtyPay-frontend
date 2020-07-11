@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/login_form"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -61,6 +62,7 @@
         app:layout_constraintVertical_bias="0.461" />
 
     <Button
+        android:id="@+id/send_captcha"
         android:layout_width="87dp"
         android:layout_height="32dp"
         android:background="@drawable/button_shape_gray"
@@ -87,6 +89,7 @@
         app:layout_constraintVertical_bias="0.568" />
 
     <Button
+        android:id="@+id/login_button"
         android:layout_width="147dp"
         android:layout_height="41dp"
         android:background="@drawable/button_shape_green"
@@ -100,16 +103,28 @@
         app:layout_constraintVertical_bias="0.792" />
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
         android:text="@string/freeze_constant"
-        android:textSize="16sp"
         android:textColor="@color/freezeTextColor"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.904" />
 
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
