@@ -4,4 +4,12 @@
     <string name="title_nfc">NFC</string>
     <string name="title_service">服务</string>
     <string name="title_my">我</string>
+    <string name="phone_number_constant">手机号</string>
+    <string name="captcha_constant">验证码</string>
+    <string name="avatar">头像</string>
+    <string name="phone_input_hint">请输入手机号码</string>
+    <string name="captcha_input_hint">请填写验证码</string>
+    <string name="get_captcha">获取验证码</string>
+    <string name="login">登录</string>
+    <string name="freeze_constant">紧急冻结</string>
 </resources>
