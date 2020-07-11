@@ -1,543 +1,202 @@
 package com.example.myapplication.utils;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Build;
-import android.os.Handler;
-
-import androidx.annotation.RequiresApi;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-
 /**
- * Created by pengzifan
+ * 用于模拟HTTP请求中GET/POST方式
+ *
+ * @author pzf
+ * @date 2020年7月12日
  */
-
 public class HttpRequestUtil {
-
-    //线程池
-    private static ExecutorService executor;
-    private static Handler mHandler;
-
-    static {
-        executor = Executors.newFixedThreadPool(5);
-        mHandler = new Handler();
-    }
-
     /**
-     * 执行网络请求操作,返回数据会解析成字符串String
+     * 发送GET请求
      *
-     * @param method 请求方式(需要传入String类型的参数:"GET","POST")
-     * @param url    请求的url
-     * @param params 请求的参数
+     * @param url 目的地址
+     * @param parameters 请求参数，Map类型。
+     * @return 远程响应结果
      */
-    public static String doHttpReqeust(final String method, final String url,
-                                       final Map<String, String> params, final StringCallback callback) {
-
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                HttpURLConnection connection = null;
-                OutputStream outputStream = null;
-                try {
-                    URL u = new URL(url);
-                    connection = (HttpURLConnection) u.openConnection();
-                    // 设置输入可用
-                    connection.setDoInput(true);
-                    // 设置输出可用
-                    connection.setDoOutput(true);
-                    // 设置请求方式
-                    connection.setRequestMethod(method);
-                    // 设置连接超时
-                    connection.setConnectTimeout(5000);
-                    // 设置读取超时
-                    connection.setReadTimeout(5000);
-                    // 设置缓存不可用
-                    connection.setUseCaches(false);
-                    // 开始连接
-                    connection.connect();
-
-                    // 只有当POST请求时才会执行此代码段
-                    if (params != null) {
-                        // 获取输出流,connection.getOutputStream已经包含了connect方法的调用
-                        outputStream = connection.getOutputStream();
-                        StringBuilder sb = new StringBuilder();
-                        Set<Map.Entry<String, String>> sets = params.entrySet();
-                        // 将Hashmap转换为string
-                        for (Map.Entry<String, String> entry : sets) {
-                            sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
-                        }
-                        String param = sb.substring(0, sb.length() - 1);
-                        // 使用输出流将string类型的参数写到服务器
-                        outputStream.write(param.getBytes());
-                        outputStream.flush();
-                    }
-
-                    int responseCode = connection.getResponseCode();
-                    if (responseCode == 200) {
-                        InputStream inputStream = connection.getInputStream();
-                        String result = inputStream2String(inputStream);
-                        if (result != null && callback != null) {
-                            postSuccessString(callback, result);
-                        }
-                    } else {
-                        if (callback != null) {
-                            postFailed(callback, responseCode, new Exception("请求数据失败：" + responseCode));
-                        }
-                    }
-
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                    if (callback != null) {
-                        postFailed(callback, 0, e);
-                    }
-
-                } finally {
-                    if (connection != null) {
-                        connection.disconnect();
-                    }
-                    if (outputStream != null) {
-                        try {
-                            outputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        });
-        return null;
-    }
-
-    /**
-     * 执行网络请求操作,返回数据是Bitmap
-     *
-     * @param method 请求方式(需要传入String类型的参数:"GET","POST")
-     * @param url    请求的url
-     * @param params 请求的参数
-     */
-    public static String doHttpReqeust(final String method, final String url,
-                                       final Map<String, String> params, final BitmapCallback callback) {
-
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                HttpURLConnection connection = null;
-                OutputStream outputStream = null;
-                InputStream inputStream = null;
-                try {
-                    URL u = new URL(url);
-                    connection = (HttpURLConnection) u.openConnection();
-                    // 设置输入可用
-                    connection.setDoInput(true);
-                    // 设置输出可用
-                    connection.setDoOutput(true);
-                    // 设置请求方式
-                    connection.setRequestMethod(method);
-                    // 设置连接超时
-                    connection.setConnectTimeout(5000);
-                    // 设置读取超时
-                    connection.setReadTimeout(5000);
-                    // 设置缓存不可用
-                    connection.setUseCaches(false);
-                    // 开始连接
-                    connection.connect();
-
-                    // 只有当POST请求时才会执行此代码段
-                    if (params != null) {
-                        // 获取输出流,connection.getOutputStream已经包含了connect方法的调用
-                        outputStream = connection.getOutputStream();
-                        StringBuilder sb = new StringBuilder();
-                        Set<Map.Entry<String, String>> sets = params.entrySet();
-                        // 将Hashmap转换为string
-                        for (Map.Entry<String, String> entry : sets) {
-                            sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
-                        }
-                        String param = sb.substring(0, sb.length() - 1);
-                        // 使用输出流将string类型的参数写到服务器
-                        outputStream.write(param.getBytes());
-                        outputStream.flush();
-                    }
-
-                    int responseCode = connection.getResponseCode();
-                    if (responseCode == 200) {
-                        inputStream = connection.getInputStream();
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        if (bitmap != null && callback != null) {
-                            postSuccessBitmap(callback, bitmap);
-                        }
-                    } else {
-                        if (callback != null) {
-                            postFailed(callback, responseCode, new Exception("请求图片失败：" + responseCode));
-                        }
-                    }
-
-
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                    if (callback != null) {
-                        postFailed(callback, 0, e);
-                    }
-
-                } finally {
-                    if (connection != null) {
-                        connection.disconnect();
-                    }
-                    if (outputStream != null) {
-                        try {
-                            outputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if (inputStream != null) {
-                        try {
-                            inputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        });
-        return null;
-    }
-
-    /**
-     * 执行网络请求操作,返回数据是byte[]
-     *
-     * @param method 请求方式(需要传入String类型的参数:"GET","POST")
-     * @param url    请求的url
-     * @param params 请求的参数
-     */
-    public static String doHttpReqeust(final String method, final String url,
-                                       final Map<String, String> params, final ByteArrayCallback callback) {
-
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                HttpURLConnection connection = null;
-                OutputStream outputStream = null;
-                try {
-                    URL u = new URL(url);
-                    connection = (HttpURLConnection) u.openConnection();
-                    // 设置输入可用
-                    connection.setDoInput(true);
-                    // 设置输出可用
-                    connection.setDoOutput(true);
-                    // 设置请求方式
-                    connection.setRequestMethod(method);
-                    // 设置连接超时
-                    connection.setConnectTimeout(5000);
-                    // 设置读取超时
-                    connection.setReadTimeout(5000);
-                    // 设置缓存不可用
-                    connection.setUseCaches(false);
-                    // 开始连接
-                    connection.connect();
-
-                    // 只有当POST请求时才会执行此代码段
-                    if (params != null) {
-                        // 获取输出流,connection.getOutputStream已经包含了connect方法的调用
-                        outputStream = connection.getOutputStream();
-                        StringBuilder sb = new StringBuilder();
-                        Set<Map.Entry<String, String>> sets = params.entrySet();
-                        // 将Hashmap转换为string
-                        for (Map.Entry<String, String> entry : sets) {
-                            sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
-                        }
-                        String param = sb.substring(0, sb.length() - 1);
-                        // 使用输出流将string类型的参数写到服务器
-                        outputStream.write(param.getBytes());
-                        outputStream.flush();
-                    }
-
-                    int responseCode = connection.getResponseCode();
-                    if (responseCode == 200) {
-                        InputStream inputStream = connection.getInputStream();
-                        byte[] bytes = inputStream2ByteArray(inputStream);
-                        if (bytes != null && callback != null) {
-                            postSuccessByte(callback, bytes);
-                        }
-                    } else {
-                        if (callback != null) {
-                            postFailed(callback, responseCode, new Exception("请求图片失败：" + responseCode));
-                        }
-                    }
-
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                    if (callback != null) {
-                        postFailed(callback, 0, e);
-                    }
-
-                } finally {
-                    if (connection != null) {
-                        connection.disconnect();
-                    }
-                    if (outputStream != null) {
-                        try {
-                            outputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        });
-        return null;
-    }
-
-    /**
-     * 执行网络请求操作,返回数据是对象
-     *
-     * @param method 请求方式(需要传入String类型的参数:"GET","POST")
-     * @param url    请求的url
-     * @param params 请求的参数
-     */
-    public static <T> void doHttpReqeust(final String method, final String url,
-                                         final Map<String, String> params, final Class<T> cls, final ObjectCallback callback) {
-
-        executor.execute(new Runnable() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void run() {
-                HttpURLConnection connection = null;
-                OutputStream outputStream = null;
-                try {
-                    URL u = new URL(url);
-                    connection = (HttpURLConnection) u.openConnection();
-                    // 设置输入可用
-                    connection.setDoInput(true);
-                    // 设置输出可用
-                    connection.setDoOutput(true);
-                    // 设置请求方式
-                    connection.setRequestMethod(method);
-                    // 设置连接超时
-                    connection.setConnectTimeout(5000);
-                    // 设置读取超时
-                    connection.setReadTimeout(5000);
-                    // 设置缓存不可用
-                    connection.setUseCaches(false);
-                    // 开始连接
-                    connection.connect();
-
-                    // 只有当POST请求时才会执行此代码段
-                    if (params != null) {
-                        // 获取输出流,connection.getOutputStream已经包含了connect方法的调用
-                        outputStream = connection.getOutputStream();
-                        StringBuilder sb = new StringBuilder();
-                        Set<Map.Entry<String, String>> sets = params.entrySet();
-                        // 将Hashmap转换为string
-                        for (Map.Entry<String, String> entry : sets) {
-                            sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
-                        }
-                        String param = sb.substring(0, sb.length() - 1);
-                        // 使用输出流将string类型的参数写到服务器
-                        outputStream.write(param.getBytes());
-                        outputStream.flush();
-                    }
-
-                    int responseCode = connection.getResponseCode();
-                    if (responseCode == 200) {
-                        InputStream inputStream = connection.getInputStream();
-                        String result = inputStream2String(inputStream);
-                        if (result != null && callback != null) {
-                            postSuccessObject(callback, JSONObject.wrap(result));
-                        }
-                    } else {
-                        if (callback != null) {
-                            postFailed(callback, responseCode, new Exception("请求数据失败：" + responseCode));
-                        }
-                    }
-
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                    if (callback != null) {
-                        postFailed(callback, 0, e);
-                    }
-
-                } finally {
-                    if (connection != null) {
-                        connection.disconnect();
-                    }
-                    if (outputStream != null) {
-                        try {
-                            outputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-
-    private static void postSuccessString(final StringCallback callback, final String result) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                callback.onSuccess(result);
-            }
-        });
-    }
-
-    private static void postSuccessBitmap(final Callback callback, final Bitmap bitmap) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                BitmapCallback bitmapCallback = (BitmapCallback) callback;
-                bitmapCallback.onSuccess(bitmap);
-            }
-        });
-    }
-
-    private static void postSuccessByte(final Callback callback, final byte[] bytes) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                ByteArrayCallback byteArrayCallback = (ByteArrayCallback) callback;
-                byteArrayCallback.onSuccess(bytes);
-            }
-        });
-    }
-
-    private static <T> void postSuccessObject(final ObjectCallback callback, final T t) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                callback.onSuccess(t);
-            }
-        });
-    }
-
-    private static void postFailed(final Callback callback, final int code, final Exception e) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                callback.onFaileure(code, e);
-            }
-        });
-    }
-
-    /**
-     * 字节流转换成字符串
-     *
-     * @param inputStream
-     * @return
-     */
-    private static String inputStream2String(InputStream inputStream) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        byte[] bytes = new byte[1024];
-        int len = 0;
+    public static String sendGet(String url, Map<String, String> parameters) {
+        String result = "";
+        BufferedReader in = null;// 读取响应输入流
+        StringBuffer sb = new StringBuffer();// 存储参数
+        String params = "";// 编码之后的参数
         try {
-            while ((len = inputStream.read(bytes)) != -1) {
-                baos.write(bytes, 0, len);
-            }
-            return new String(baos.toByteArray());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+// 编码请求参数
+            if (parameters.size() == 1) {
+                for (String name : parameters.keySet()) {
+                    sb.append(name).append("=").append(java.net.URLEncoder.encode(parameters.get(name), "UTF-8"));
                 }
-            }
-            if (baos != null) {
-                try {
-                    baos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                params = sb.toString();
+            } else {
+                for (String name : parameters.keySet()) {
+                    sb.append(name).append("=").append(java.net.URLEncoder.encode(parameters.get(name), "UTF-8"))
+                            .append("&");
                 }
+                String temp_params = sb.toString();
+                params = temp_params.substring(0, temp_params.length() - 1);
             }
-        }
-        return null;
-    }
-
-    /**
-     * 字节流转换成字节数组
-     *
-     * @param inputStream 输入流
-     * @return
-     */
-    public static byte[] inputStream2ByteArray(InputStream inputStream) {
-        byte[] result = null;
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        // 缓冲区
-        byte[] bytes = new byte[1024];
-        int len = -1;
-        try {
-            // 使用字节数据输出流来保存数据
-            while ((len = inputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, len);
+            String full_url = url + "?" + params;
+            System.out.println(full_url);
+// 创建URL对象
+            java.net.URL connURL = new java.net.URL(full_url);
+// 打开URL连接
+            java.net.HttpURLConnection httpConn = (java.net.HttpURLConnection) connURL.openConnection();
+// 设置通用属性
+            httpConn.setRequestProperty("Accept", "*/*");
+            httpConn.setRequestProperty("Connection", "Keep-Alive");
+            httpConn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
+// 建立实际的连接
+            httpConn.connect();
+// 响应头部获取
+            Map<String, List<String>> headers = httpConn.getHeaderFields();
+// 遍历所有的响应头字段
+            for (String key : headers.keySet()) {
+                System.out.println(key + "\t：\t" + headers.get(key));
             }
-            result = outputStream.toByteArray();
-        } catch (IOException e) {
+// 定义BufferedReader输入流来读取URL的响应,并设置编码方式
+            in = new BufferedReader(new InputStreamReader(httpConn.getInputStream(), "UTF-8"));
+            String line;
+// 读取返回的内容
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                inputStream.close();
-                outputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
         return result;
     }
 
     /**
-     * 判断是否联网
+     * 发送POST请求
      *
-     * @param context
-     * @return
+     * @param url 目的地址
+     * @param parameters 请求参数，Map类型。
+     * @return 远程响应结果
      */
-    public static boolean isNetWorkConnected(Context context) {
-
-        ConnectivityManager manager = (ConnectivityManager)
-                context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-
-        if (networkInfo != null) {
-            return networkInfo.isAvailable();
+    public static String sendPost(String url, Map<String, String> parameters) {
+        String result = "";// 返回的结果
+        BufferedReader in = null;// 读取响应输入流
+        PrintWriter out = null;
+        StringBuffer sb = new StringBuffer();// 处理请求参数
+        String params = "";// 编码之后的参数
+        try {
+// 编码请求参数
+            if (parameters.size() == 1) {
+                for (String name : parameters.keySet()) {
+                    sb.append(name).append("=").append(java.net.URLEncoder.encode(parameters.get(name), "UTF-8"));
+                }
+                params = sb.toString();
+            } else {
+                for (String name : parameters.keySet()) {
+                    sb.append(name).append("=").append(java.net.URLEncoder.encode(parameters.get(name), "UTF-8"))
+                            .append("&");
+                }
+                String temp_params = sb.toString();
+                params = temp_params.substring(0, temp_params.length() - 1);
+            }
+// 创建URL对象
+            java.net.URL connURL = new java.net.URL(url);
+// 打开URL连接
+            java.net.HttpURLConnection httpConn = (java.net.HttpURLConnection) connURL.openConnection();
+// 设置通用属性
+            httpConn.setRequestProperty("Accept", "*/*");
+            httpConn.setRequestProperty("Connection", "Keep-Alive");
+            httpConn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
+// 设置POST方式
+            httpConn.setDoInput(true);
+            httpConn.setDoOutput(true);
+// 获取HttpURLConnection对象对应的输出流
+            out = new PrintWriter(httpConn.getOutputStream());
+// 发送请求参数
+            out.write(params);
+// flush输出流的缓冲
+            out.flush();
+// 定义BufferedReader输入流来读取URL的响应，设置编码方式
+            in = new BufferedReader(new InputStreamReader(httpConn.getInputStream(), "UTF-8"));
+            String line;
+// 读取返回的内容
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
-        return false;
+        return result;
     }
 
-    public interface Callback {
-        void onFaileure(int code, Exception e);
-    }
-
-    public interface StringCallback extends Callback {
-        void onSuccess(String result);
-    }
-
-    public interface BitmapCallback extends Callback {
-        void onSuccess(Bitmap bitmap);
-    }
-
-    public interface ByteArrayCallback extends Callback {
-        void onSuccess(byte[] bytes);
-    }
-
-    public interface ObjectCallback<T> extends Callback {
-        void onSuccess(T t);
+    public static String sendPostTest(String url, JSONObject json) {
+        String result = "";// 返回的结果
+        BufferedReader in = null;// 读取响应输入流
+        PrintWriter out = null;
+        String params = "";// 编码之后的参数
+        try {
+// 编码请求参数
+            params = json.toString();
+// 创建URL对象
+            java.net.URL connURL = new java.net.URL(url);
+// 打开URL连接
+            java.net.HttpURLConnection httpConn = (java.net.HttpURLConnection) connURL.openConnection();
+// 设置通用属性
+            httpConn.setRequestProperty("Accept", "*/*");
+            httpConn.setRequestProperty("Connection", "Keep-Alive");
+            httpConn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
+// 设置POST方式
+            httpConn.setDoInput(true);
+            httpConn.setDoOutput(true);
+// 获取HttpURLConnection对象对应的输出流
+            out = new PrintWriter(httpConn.getOutputStream());
+// 发送请求参数
+            out.write(params);
+// flush输出流的缓冲
+            out.flush();
+// 定义BufferedReader输入流来读取URL的响应，设置编码方式
+            in = new BufferedReader(new InputStreamReader(httpConn.getInputStream(), "UTF-8"));
+            String line;
+// 读取返回的内容
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return result;
     }
 }

@@ -109,9 +109,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Map<String,String> postParams = new HashMap<>();
         postParams.put("phone",phone);
-        HttpRequestUtil.StringCallback stringCallback = null;
-        HttpRequestUtil.doHttpReqeust("POST",mSendCaptchaUrl, postParams,stringCallback);
-        System.out.println(stringCallback);
+        System.out.println(HttpRequestUtil.sendPost(mSendCaptchaUrl,postParams));
     }
 
     boolean checkForm() {
@@ -153,32 +151,25 @@ public class LoginActivity extends AppCompatActivity {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
+        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        mProgressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     /**
@@ -196,19 +187,18 @@ public class LoginActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-           JSONObject jsonObject = new JSONObject();
+           Map<String,String> postParams = new HashMap<>();
 
             //发起登录或注册请求
-//            JSONObject postParams = new JSONObject();
-//            postParams.put("phone",phone);
-//            postParams.put("captcha",captcha);
-//
-//             JSONObject result =  HttpRequestUtil.doPost(mLoginUrl, postParams);
-//             if(result==null){
-//                 System.out.println("登录后输出了null");
-//             }else {
-//                 System.out.println(result.get("message"));
-//             }
+            postParams.put("phone",phone);
+            postParams.put("captcha",captcha);
+
+             String result =  HttpRequestUtil.sendPost(mLoginUrl, postParams);
+             if(result==null){
+                 System.out.println("登录后输出了null");
+             }else {
+                 System.out.println(result);
+             }
 
         }
     }
