@@ -17,10 +17,11 @@
 <!--        <attr name="edt_hint_content" format="string" />-->
 <!--        &lt;!&ndash;输入框的提示字体的字体颜色&ndash;&gt;-->
 <!--        <attr name="edt_hint_text_color" format="color" />-->
-        <!--输入框是否可以编辑内容-->
-        <attr name="isEditable" format="boolean"/>
+<!--        &lt;!&ndash;输入框是否可以编辑内容&ndash;&gt;-->
+<!--        <attr name="isEditable" format="boolean"/>-->
         <!--向的右箭头图标是否可见-->
         <attr name="jt_visible" format="boolean"/>
+        <attr name="icon_src" format="reference"/>
         <!--item布局的内边距-->
         <attr name="paddingLeft" format="dimension"/>
         <attr name="paddingRight" format="dimension"/>

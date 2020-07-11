@@ -1,7 +1,12 @@
 package com.example.myapplication.ui.my;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +22,15 @@ import androidx.annotation.Nullable;
 
 import com.example.myapplication.R;
 
+import java.lang.ref.Reference;
+
 public class ItemGroup extends FrameLayout{
 
     private LinearLayout itemGroupLayout; //组合控件的布局
     private TextView titleTv; //标题
     private TextView contentEdt; //输入框
     private ImageView jtRightIv; //向右的箭头
+    private ImageView igIcon;
 
     public TextView getContentEdt() {
         return contentEdt;
@@ -52,6 +60,7 @@ public class ItemGroup extends FrameLayout{
         titleTv = (TextView) view.findViewById(R.id.title_tv);
         contentEdt = (TextView) view.findViewById(R.id.content_edt);
         jtRightIv = (ImageView) view.findViewById(R.id.jt_right_iv);
+        igIcon = (ImageView) view.findViewById(R.id.ig_icon);
         addView(view); //把自定义的这个组合控件的布局加入到当前FramLayout
     }
     /**
@@ -82,9 +91,11 @@ public class ItemGroup extends FrameLayout{
 //        String hintContent = typedArray.getString(R.styleable.ItemGroup_edt_hint_content);
 //        int hintColor = typedArray.getColor(R.styleable.ItemGroup_edt_hint_text_color, defaultHintColor);
         //默认输入框可以编辑
-        boolean isEditable = typedArray.getBoolean(R.styleable.ItemGroup_isEditable, true);
+//        boolean isEditable = typedArray.getBoolean(R.styleable.ItemGroup_isEditable, true);
         //向右的箭头图标是否可见，默认可见
         boolean showJtIcon = typedArray.getBoolean(R.styleable.ItemGroup_jt_visible, true);
+
+        int drawableId = typedArray.getResourceId(R.styleable.ItemGroup_icon_src,R.drawable.messagecard);
         typedArray.recycle();
 
         //设置数据
@@ -102,6 +113,9 @@ public class ItemGroup extends FrameLayout{
 //        contentEdt.setFocusable(isEditable); //设置输入框是否可以编辑
 //        contentEdt.setClickable(true);
 //        contentEdt.setKeyListener(null);
+        Bitmap gameStatusBitmap = BitmapFactory.decodeResource(getResources(), drawableId);
+        igIcon.setImageBitmap(gameStatusBitmap);
         jtRightIv.setVisibility(showJtIcon ? View.VISIBLE : View.GONE);  //设置向右的箭头图标是否可见
+
     }
 }
