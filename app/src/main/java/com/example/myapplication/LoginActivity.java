@@ -1,10 +1,6 @@
 package com.example.myapplication;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -35,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
     private final String mSendCaptchaUrl = getFullUrl("/user/sendCaptcha");
     EditText mPhoneView = findViewById(R.id.edit_phone_number);
     EditText mCaptchaView = findViewById(R.id.edit_captcha);
-    private View mLoginFormView;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -88,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
+        //View mLoginFormView = findViewById(R.id.login_form);
 
 //        //尝试使用 cookie中的token 自动登录
 //        SharedPreferences sp = getSharedPreferences(getString(R.string.cookie_preference_file), MODE_PRIVATE);
@@ -148,10 +143,7 @@ public class LoginActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
            Map<String,String> postParams = new HashMap<>();
-
             //发起登录或注册请求
             postParams.put("phone",phone);
             postParams.put("captcha",captcha);
