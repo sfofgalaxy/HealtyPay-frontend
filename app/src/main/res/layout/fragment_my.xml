@@ -1,23 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.my.MyFragment">
+    tools:context=".ui.my.MyFragment"
+    android:orientation="vertical"
+    android:background="#ffffff">
 
-    <TextView
-        android:id="@+id/text_my"
+    <!--    头像-->
+    <LinearLayout
+        android:id="@+id/ll_portrait"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center_horizontal" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@color/colorPrimary">
+
+        <com.example.myapplication.ui.my.RoundImageView
+            android:id="@+id/ri_portrait"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="5dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher_round"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请先验证身份信息"
+            android:textColor="#ffffff"
+            android:layout_gravity="center"
+            android:paddingLeft="40dp"/>
+
+    </LinearLayout>
+    <!--    编辑界面，此处可以写成一个ItemGroup上传至com上-->
+    <com.example.myapplication.ui.my.ItemGroup
+        android:id="@+id/ig_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:paddingLeft="10dp"
+        app:title="身份信息" />
+
+    <com.example.myapplication.ui.my.ItemGroup
+        android:id="@+id/ig_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:paddingLeft="10dp"
+        app:title="银行卡" />
+
+    <com.example.myapplication.ui.my.ItemGroup
+        android:id="@+id/ig_gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:paddingLeft="10dp"
+        app:title="乘车卡"/>
+
+    <com.example.myapplication.ui.my.ItemGroup
+        android:id="@+id/ig_region"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        app:paddingLeft="10dp"
+        app:edt_content="0.00元"
+        app:title="余额" />
+
+    <com.example.myapplication.ui.my.ItemGroup
+        android:id="@+id/ig_brithday"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        app:paddingLeft="10dp"
+        app:title="账单" />
+
+    <com.example.myapplication.ui.my.ItemGroup
+        android:id="@+id/ig_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        app:paddingLeft="10dp"
+        app:title="反馈" />
+</LinearLayout>
