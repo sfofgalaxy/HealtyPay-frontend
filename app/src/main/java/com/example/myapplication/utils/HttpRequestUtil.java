@@ -1,13 +1,13 @@
 package com.example.myapplication.utils;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
-
-import org.json.JSONObject;
 
 /**
  * 用于模拟HTTP请求中GET/POST方式

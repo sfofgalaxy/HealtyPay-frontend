@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.utils.HttpRequestUtil;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
     private final String mSendCaptchaUrl = getFullUrl("/user/sendCaptcha");
     EditText mPhoneView = findViewById(R.id.edit_phone_number);
     EditText mCaptchaView = findViewById(R.id.edit_captcha);
-    private View mProgressView;
     private View mLoginFormView;
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -91,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
 
 //        //尝试使用 cookie中的token 自动登录
 //        SharedPreferences sp = getSharedPreferences(getString(R.string.cookie_preference_file), MODE_PRIVATE);
@@ -103,10 +100,6 @@ public class LoginActivity extends AppCompatActivity {
 
     //尝试发送验证码
     private void attemptSendCaptcha(String phone) throws JSONException {
-        // Show a progress spinner, and kick off a background task to
-        // perform the user sign up attempt.
-        showProgress(true);
-
         Map<String,String> postParams = new HashMap<>();
         postParams.put("phone",phone);
         System.out.println(HttpRequestUtil.sendPost(mSendCaptchaUrl,postParams));
@@ -144,35 +137,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        mProgressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
-    }
-
-    /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
@@ -186,7 +150,6 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
            Map<String,String> postParams = new HashMap<>();
 
             //发起登录或注册请求
