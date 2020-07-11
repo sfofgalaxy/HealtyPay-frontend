@@ -1,12 +1,9 @@
-package com.example.myapplication.ui.login;
+package com.example.myapplication;
 
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,8 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.myapplication.MainActivity;
-import com.example.myapplication.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.utils.HttpRequestUtil;
 
 import org.json.JSONException;
@@ -34,7 +31,7 @@ import static com.example.myapplication.config.Config.getFullUrl;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
     private final String mLoginUrl = getFullUrl("/user/login");
     private final String mSendCaptchaUrl = getFullUrl("/user/sendCaptcha");
     EditText mPhoneView = findViewById(R.id.edit_phone_number);
@@ -51,8 +48,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        // Set up the login form.
-        // UI references.
+
         //输入完成验证码后点击回车键触发
         mCaptchaView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
