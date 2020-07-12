@@ -4,4 +4,8 @@
     <string name="title_nfc">NFC</string>
     <string name="title_service">服务</string>
     <string name="title_my">我</string>
+    <string name="NFCPayTipString">正在模拟支付，请靠近扫描点</string>
+    <string name="payMethodTipString">优先使用此方式支付</string>
+    <string name="nfc_pay">付款</string>
+    <string name="nfc_transport">乘车码</string>
 </resources>
