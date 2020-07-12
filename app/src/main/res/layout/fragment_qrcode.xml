@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".ui.nfc.NFCFragment">
+    tools:context=".ui.qrCode.QRCodeFragment">
 
     <View
-        android:id="@+id/NFCTipView"
+        android:id="@+id/codeTipView"
         android:layout_width="313dp"
         android:layout_height="50dp"
         android:layout_marginStart="60dp"
@@ -16,14 +16,14 @@
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:background="#80C82D"
-        app:layout_constraintBottom_toTopOf="@+id/NFCView"
+        app:layout_constraintBottom_toTopOf="@+id/codeView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
     </View>
 
     <View
-        android:id="@+id/NFCView"
+        android:id="@+id/codeView"
         android:layout_width="313dp"
         android:layout_height="362dp"
         android:layout_marginStart="60dp"
@@ -40,38 +40,29 @@
     </View>
 
     <TextView
-        android:id="@+id/NFCPayTip"
+        android:id="@+id/codePayTip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/NFCPayTipString"
+        android:text="向商家支付"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/NFCTipView"
+        app:layout_constraintBottom_toBottomOf="@+id/codeTipView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/NFCTipView" />
+        app:layout_constraintTop_toTopOf="@+id/codeTipView" />
 
     <ImageView
-        android:id="@+id/NFCPayTipImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/codePayTipImage"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:src="@android:drawable/btn_star_big_on"
-        app:layout_constraintBottom_toBottomOf="@+id/NFCPayTip"
-        app:layout_constraintEnd_toStartOf="@+id/NFCPayTip"
-        app:layout_constraintStart_toStartOf="@id/NFCView"
-        app:layout_constraintTop_toTopOf="@+id/NFCPayTip" />
-
-    <ImageView
-        android:id="@+id/NFCPayImage"
-        android:layout_width="197dp"
-        android:layout_height="227dp"
-        android:src="@drawable/ic_nfc_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NFCTipView" />
+        app:layout_constraintBottom_toBottomOf="@+id/codePayTip"
+        app:layout_constraintEnd_toStartOf="@+id/codePayTip"
+        app:layout_constraintStart_toStartOf="@id/codeView"
+        app:layout_constraintTop_toTopOf="@+id/codePayTip"
+        app:srcCompat="@drawable/pay1" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -81,7 +72,7 @@
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NFCPayImage" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <ImageView
         android:id="@+id/bankSymbol"
@@ -90,8 +81,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:src="@drawable/abc"
-        app:layout_constraintBottom_toBottomOf="@+id/NFCView"
-        app:layout_constraintStart_toStartOf="@+id/NFCView"
+        app:layout_constraintBottom_toBottomOf="@+id/codeView"
+        app:layout_constraintStart_toStartOf="@+id/codeView"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
     <TextView
@@ -112,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/payMethodTipString"
         android:textColor="#9F9B9B"
         android:textSize="12sp"
@@ -127,7 +118,7 @@
         android:layout_marginRight="24dp"
         android:src="@drawable/arrow"
         app:layout_constraintBottom_toBottomOf="@+id/bankSymbol"
-        app:layout_constraintEnd_toEndOf="@+id/NFCView" />
+        app:layout_constraintEnd_toEndOf="@+id/codeView" />
 
     <ImageButton
         android:id="@+id/payImageButton"
@@ -138,7 +129,7 @@
         android:layout_marginTop="24dp"
         android:src="@drawable/payfor3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NFCView" />
+        app:layout_constraintTop_toBottomOf="@+id/codeView" />
 
     <TextView
         android:id="@+id/payOptionTip"
@@ -170,4 +161,36 @@
         app:layout_constraintStart_toStartOf="@+id/transportImageButton"
         app:layout_constraintTop_toTopOf="@+id/payOptionTip" />
 
+    <ImageView
+        android:id="@+id/linearCodeImage"
+        android:layout_width="280dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/linear_code"
+        app:layout_constraintEnd_toEndOf="@+id/codeView"
+        app:layout_constraintStart_toStartOf="@+id/codeView"
+        app:layout_constraintTop_toBottomOf="@+id/codePayTipImage" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="140dp"
+        android:layout_height="137dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/qr_code1"
+        app:layout_constraintEnd_toEndOf="@+id/codeView"
+        app:layout_constraintStart_toStartOf="@+id/codeView"
+        app:layout_constraintTop_toBottomOf="@+id/linearCodeImage" />
+
+    <Button
+        android:id="@+id/healthCheck"
+        android:layout_width="80dp"
+        android:layout_height="36dp"
+        android:background="@drawable/button_shape_blue"
+        android:text="健康核验"
+        android:textColor="#686868"
+        app:layout_constraintBottom_toBottomOf="@+id/codeTipView"
+        app:layout_constraintEnd_toEndOf="@+id/codeTipView"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toEndOf="@+id/codePayTip"
+        app:layout_constraintTop_toTopOf="@+id/codeTipView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
