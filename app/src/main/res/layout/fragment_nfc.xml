@@ -8,19 +8,19 @@
     tools:context=".ui.nfc.NFCFragment">
 
     <View
-        android:id="@+id/NFCTipView"
-        android:layout_width="313dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
-        android:background="#80C82D"
-        app:layout_constraintBottom_toTopOf="@+id/NFCView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+    android:id="@+id/NFCTipView"
+    android:layout_width="313dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="60dp"
+    android:layout_marginLeft="60dp"
+    android:layout_marginEnd="60dp"
+    android:layout_marginRight="60dp"
+    android:background="#80C82D"
+    app:layout_constraintBottom_toTopOf="@+id/NFCView"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
 
-    </View>
+</View>
 
     <View
         android:id="@+id/NFCView"
