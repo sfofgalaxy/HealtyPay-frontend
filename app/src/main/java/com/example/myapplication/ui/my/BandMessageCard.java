@@ -29,7 +29,7 @@ import static com.example.myapplication.config.Config.getFullUrl;
 
 public class BandMessageCard extends Activity {
     private Context context;
-    private final String mPutUserIdByTokenUrl = getFullUrl("/user/Id");
+    private final String mPutUserIdByTokenUrl = getFullUrl("/user/ID");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class BandMessageCard extends Activity {
                     putParams.put("ID",card);
                     String result = HttpRequestUtil.sendPut(mPutUserIdByTokenUrl,putParams,token);
                     try {
-                        Boolean status = JsonUtil.stringToJsonObject(result).getBoolean("status");
+                        Boolean status = JsonUtil.stringToJsonObject(result).getBoolean("state");
                         if (status){
                             Toast.makeText(BandMessageCard.this, "绑定成功", Toast.LENGTH_SHORT).show();
                         }else{
@@ -74,6 +74,7 @@ public class BandMessageCard extends Activity {
                         e.printStackTrace();
                     }
                 }
+                BandMessageCard.this.finish();
             }
         });
     }
