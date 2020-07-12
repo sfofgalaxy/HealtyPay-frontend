@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.my.MyFragment"
     android:orientation="vertical"
-    android:background="#ffffff"
+    android:background="#d7d7d7"
     android:name=".CommentActivity"
     android:screenOrientation="portrait"
     android:theme="@style/Theme.ched">
@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
         android:background="@color/colorPrimary">
 
         <com.example.myapplication.ui.my.RoundImageView
@@ -29,52 +30,53 @@
             android:src="@mipmap/ic_launcher_round"/>
 
         <TextView
+            android:id="@+id/check_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请先验证身份信息"
             android:textColor="#ffffff"
             android:layout_gravity="center"
+            android:textSize="18sp"
             android:paddingLeft="40dp"/>
 
     </LinearLayout>
     <!--    编辑界面，此处可以写成一个ItemGroup上传至com上-->
     <com.example.myapplication.ui.my.ItemGroup
-        android:id="@+id/ig_id"
+        android:id="@+id/ig_messagecard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         app:paddingLeft="10dp"
         app:icon_src="@drawable/messagecard"
         app:title="身份信息" />
 
     <com.example.myapplication.ui.my.ItemGroup
-        android:id="@+id/ig_name"
+        android:id="@+id/ig_moneycard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         app:paddingLeft="10dp"
         app:icon_src="@drawable/moneycard"
         app:title="银行卡" />
 
     <com.example.myapplication.ui.my.ItemGroup
-        android:id="@+id/ig_gender"
+        android:id="@+id/ig_buscard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         app:paddingLeft="10dp"
         app:icon_src="@drawable/buscard"
         app:title="乘车卡"/>
 
-    <com.example.myapplication.ui.my.ItemGroup
-        android:id="@+id/ig_region"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        app:paddingLeft="10dp"
-        app:edt_content="0.00元"
-        app:icon_src="@drawable/leftmoney"
-        app:title="余额" />
+<!--    <com.example.myapplication.ui.my.ItemGroup-->
+<!--        android:id="@+id/ig_region"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="46dp"-->
+<!--        app:paddingLeft="10dp"-->
+<!--        app:edt_content="0.00元"-->
+<!--        app:icon_src="@drawable/leftmoney"-->
+<!--        app:title="余额" />-->
 
     <com.example.myapplication.ui.my.ItemGroup
-        android:id="@+id/ig_brithday"
+        android:id="@+id/ig_bill"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
+        android:layout_height="60dp"
         app:paddingLeft="10dp"
         app:icon_src="@drawable/bill"
         app:title="账单" />
@@ -82,7 +84,7 @@
     <com.example.myapplication.ui.my.ItemGroup
         android:id="@+id/ig_feedback"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
+        android:layout_height="60dp"
         app:paddingLeft="10dp"
         app:icon_src="@drawable/feedback"
         app:title="反馈" />
