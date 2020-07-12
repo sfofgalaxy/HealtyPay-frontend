@@ -13,8 +13,18 @@
         android:layout_height="50dp"
         android:scaleType="centerCrop"
         app:left_icon="@drawable/arrow_left"
-        app:bar_title="绑定身份证"/>
-
+        app:bar_title="添加银行卡"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp">
+        <ImageView
+            android:id="@+id/avatarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/moneycard" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,20 +33,21 @@
         android:paddingBottom="2dp">
 
         <TextView
-            android:id="@+id/band_name"
+            android:id="@+id/bank_number"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:paddingLeft="10dp"
-            android:text="姓名"
+            android:text="卡号"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/edit_band_name"
+            android:id="@+id/edit_bank_number"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:paddingLeft="10dp"
             android:background="@null"
-            android:hint="@string/name_input_hint"
+            android:hint="请输入银行卡号"
+            android:inputType="phone"
             android:textSize="22sp" />
 
 
@@ -52,34 +63,62 @@
         android:paddingTop="2dp"
         android:paddingBottom="2dp">
         <TextView
-            android:id="@+id/band_card"
+            android:id="@+id/bank_password"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:paddingLeft="10dp"
-            android:text="身份证号"
+            android:text="密码"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/edit_band_card"
+            android:id="@+id/edit_bank_password"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:paddingLeft="10dp"
             android:background="@null"
-            android:hint="@string/id_input_hint"
             android:inputType="phone"
+            android:hint="请输入密码"
+            android:textSize="22sp" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dddddd" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
+        <TextView
+            android:id="@+id/bank_phone"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:paddingLeft="10dp"
+            android:text="手机号"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/edit_bank_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingLeft="10dp"
+            android:background="@null"
+            android:inputType="phone"
+            android:hint="请输入银行预留的手机号"
             android:textSize="22sp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
         android:gravity="center|center_horizontal|center_vertical" >
         <Button
-            android:id="@+id/band_button"
+            android:id="@+id/bank_bank_button"
             android:layout_width="147dp"
             android:layout_height="41dp"
-            android:layout_margin="40dp"
             android:background="@drawable/button_shape_green"
-            android:text="@string/band"
+            android:text="绑定"
             android:textColor="@color/titleTextColor"
             android:textSize="25sp" />
     </LinearLayout>

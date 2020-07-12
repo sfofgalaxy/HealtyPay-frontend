@@ -16,11 +16,11 @@ public class BankCardInfo extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bank_card_info);
 
-        Button button = findViewById(R.id.titlebar_bank);
+        Button button = findViewById(R.id.titlebar_bank).findViewById(R.id.add_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(BankCardInfo.this, BankCardInfo.class);
+                Intent i = new Intent(BankCardInfo.this, AddBankCard.class);
                 startActivity(i);
             }
         });

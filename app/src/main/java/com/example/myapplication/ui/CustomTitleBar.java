@@ -44,7 +44,7 @@ public class CustomTitleBar extends RelativeLayout {
         //赋值进去我们的标题栏
         tvTitle.setText(title);
         ivBack.setImageResource(leftIcon);
-        button.setVisibility(buttonVisible ? VISIBLE : GONE);
+        button.setVisibility(buttonVisible == true ? VISIBLE : GONE);
     }
 
     //左边图片点击事件

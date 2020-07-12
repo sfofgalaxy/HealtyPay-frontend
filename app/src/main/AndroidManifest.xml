@@ -58,6 +58,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.my.AddBankCard"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
