@@ -6,11 +6,6 @@ import android.content.SharedPreferences;
 public class SharedPreferencesUtil {
     //文件名称为config
     private static final String PREFERENCE_NAME = "config";
-    //可以在此定义常亮，当做key使用
-    //版本号
-    public static final String APK_VERSION = "APK_VERSION";
-    //下载地址
-    public static final String APK_DOWNLOAD_URL = "APK_DOWNLOAD_URL";
 
     private static SharedPreferences sharedPreferences;
 

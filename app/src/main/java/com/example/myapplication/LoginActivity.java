@@ -3,6 +3,9 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,8 +20,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.myapplication.utils.HttpRequestUtil;
+import com.example.myapplication.utils.SharedPreferencesUtil;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +43,8 @@ public class LoginActivity extends Activity {
     private Button mLoginButton;
     private Button mSendCaptchaButton;
     private TimeCount time;
+    private Context context;
+
     //用于发送完验证码倒计时的类
     class TimeCount extends CountDownTimer {
         public TimeCount(long millisInFuture, long countDownInterval) {
@@ -61,6 +68,7 @@ public class LoginActivity extends Activity {
     private View focusView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context = getApplicationContext();
         super.onCreate(savedInstanceState);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -73,11 +81,10 @@ public class LoginActivity extends Activity {
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login_button || id == EditorInfo.IME_NULL) {
                     try {
-                        attemptLogin(mPhoneView.getText().toString(),mCaptchaView.getText().toString());
+                        attemptLogin(mPhoneView.getText().toString(), mCaptchaView.getText().toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    return true;
                 }
                 return false;
             }
@@ -106,13 +113,12 @@ public class LoginActivity extends Activity {
                 }
             }
         });
-
-//        //尝试使用 cookie中的token 自动登录
-//        SharedPreferences sp = getSharedPreferences(getString(R.string.cookie_preference_file), MODE_PRIVATE);
-//        String localCookieStr = sp.getString("token", "");
-//        if(! localCookieStr.isEmpty()) {
-//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//        }
+        //尝试使用 cookie中的token 自动登录
+        String token = SharedPreferencesUtil.getString(context,"token",null);
+        if(token!=null&&!token.isEmpty()) {
+            //做一些操作
+            //startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
     }
 
     //尝试发送验证码
@@ -158,7 +164,7 @@ public class LoginActivity extends Activity {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin(String phone,String captcha) throws JSONException {
+    private void attemptLogin(String phone, String captcha) throws JSONException {
         boolean cancel = checkForm();
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -173,8 +179,8 @@ public class LoginActivity extends Activity {
              if(result==null){
                  System.out.println("登录后输出了null");
              }else {
-                 //{"state":true,"message":"c27a8b436fde08f5471cb7b3085de7f8"}
-                 System.out.println(result);
+                 JSONObject jsonObject = new JSONObject(result);
+                 SharedPreferencesUtil.putString(context,"token",jsonObject.getString("message"));
              }
 
         }
@@ -187,7 +193,5 @@ public class LoginActivity extends Activity {
     private boolean isCaptchaValid(String captcha) {
         return captcha.length() == 6;
     }
-
-
 }
 
