@@ -15,4 +15,8 @@
     <string name="band">绑定</string>
     <string name="id_input_hint">请输入身份证号</string>
     <string name="name_input_hint">请填写姓名</string>
+    <string name="cookie_preference_file">CookiePrefsFile</string>
+    <string name="error_invalid_captcha">请输入正确的验证码</string>
+    <string name="error_field_required">请输入手机号</string>
+    <string name="error_invalid_phone">请输入正确手机号</string>
 </resources>
