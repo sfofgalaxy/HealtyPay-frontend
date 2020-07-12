@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class MyFragment extends Fragment {
     private Context context;
     private final String mGetUserIdByTokenUrl = getFullUrl("/user/ID");
     private final String mGetUserByTokenUrl = getFullUrl("/user");
+    private final String mLogoutByTokenUrl = getFullUrl("/user/logout");
     //是否第一次加载
     private boolean isFirstLoading = true;
 
@@ -100,7 +102,37 @@ public class MyFragment extends Fragment {
             }
         });
 
-
+        Button button = root.findViewById(R.id.logout_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String token = SharedPreferencesUtil.getString(context,"token",null);
+                if(token == null){
+                    Toast.makeText(context, "登录已过期", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Map<String,String> postParams = new HashMap<>();
+                postParams.put("token",token);
+                String result = HttpRequestUtil.sendPost(mLogoutByTokenUrl,postParams,token);
+                /*重要，需要判断token的位置*/
+                if(result==null|| result.equals("")){
+                    //证明此时token虽然在手机缓存有但已经过期，同样需要跳转到登录页面
+                    Toast.makeText(context, "登录已过期", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    Boolean state = JsonUtil.stringToJsonObject(result).getBoolean("state");
+                    if(state){
+                        Toast.makeText(context, "退出成功", Toast.LENGTH_SHORT).show();
+                        getActivity().finish();
+                    }else{
+                        Toast.makeText(context, "退出失败", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         return root;
     }
 
