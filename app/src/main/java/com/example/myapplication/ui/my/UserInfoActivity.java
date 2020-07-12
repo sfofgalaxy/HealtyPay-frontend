@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.ui.CustomTitleBar;
 
 import java.time.Instant;
 
@@ -33,6 +36,14 @@ public class UserInfoActivity extends Activity {
             public void onClick(View view) {
                 Intent i = new Intent(UserInfoActivity.this, BandMessageCard.class);
                 startActivity(i);
+            }
+        });
+
+        CustomTitleBar titleBar = findViewById(R.id.titlebar_info);
+        titleBar.setLeftIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfoActivity.this.finish();
             }
         });
     }
