@@ -68,13 +68,13 @@
         android:layout_width="197dp"
         android:layout_height="227dp"
         android:src="@drawable/ic_nfc_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
+        app:layout_constraintBottom_toTopOf="@+id/qrLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NFCTipView" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/qrLine"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="300dp"
         android:layout_height="5dp"
@@ -92,7 +92,7 @@
         android:src="@drawable/abc"
         app:layout_constraintBottom_toBottomOf="@+id/NFCView"
         app:layout_constraintStart_toStartOf="@+id/NFCView"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/qrLine" />
 
     <TextView
         android:id="@+id/bankCard"

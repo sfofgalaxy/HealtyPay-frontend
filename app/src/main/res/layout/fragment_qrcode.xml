@@ -65,17 +65,17 @@
         app:srcCompat="@drawable/pay1" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/qrLine"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="300dp"
         android:layout_height="5dp"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        app:layout_constraintTop_toBottomOf="@+id/qrcodeImage" />
 
     <ImageView
-        android:id="@+id/bankSymbol"
+        android:id="@+id/qrcodeBankSymbol"
         android:layout_width="41dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -83,10 +83,10 @@
         android:src="@drawable/abc"
         app:layout_constraintBottom_toBottomOf="@+id/codeView"
         app:layout_constraintStart_toStartOf="@+id/codeView"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/qrLine" />
 
     <TextView
-        android:id="@+id/bankCard"
+        android:id="@+id/qrBankCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -94,11 +94,11 @@
         android:text="农业银行储蓄卡"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/bankSymbol"
-        app:layout_constraintTop_toTopOf="@+id/bankSymbol" />
+        app:layout_constraintStart_toEndOf="@+id/qrcodeBankSymbol"
+        app:layout_constraintTop_toTopOf="@+id/qrcodeBankSymbol" />
 
     <TextView
-        android:id="@+id/payMethodTip"
+        android:id="@+id/qrPayMethodTip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -107,8 +107,8 @@
         android:text="@string/payMethodTipString"
         android:textColor="#9F9B9B"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/bankSymbol"
-        app:layout_constraintTop_toBottomOf="@+id/bankCard" />
+        app:layout_constraintStart_toEndOf="@+id/qrcodeBankSymbol"
+        app:layout_constraintTop_toBottomOf="@+id/qrBankCard" />
 
     <ImageView
         android:id="@+id/changeCardImage"
@@ -117,7 +117,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:src="@drawable/arrow"
-        app:layout_constraintBottom_toBottomOf="@+id/bankSymbol"
+        app:layout_constraintBottom_toBottomOf="@+id/qrcodeBankSymbol"
         app:layout_constraintEnd_toEndOf="@+id/codeView" />
 
     <ImageButton
@@ -172,9 +172,9 @@
         app:layout_constraintTop_toBottomOf="@+id/codePayTipImage" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/qrcodeImage"
         android:layout_width="140dp"
-        android:layout_height="137dp"
+        android:layout_height="140dp"
         android:layout_marginTop="24dp"
         android:src="@drawable/qr_code1"
         app:layout_constraintEnd_toEndOf="@+id/codeView"
