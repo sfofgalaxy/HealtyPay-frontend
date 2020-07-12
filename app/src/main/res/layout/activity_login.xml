@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.223"
-        app:srcCompat="@drawable/avatar" />
+        android:src="@drawable/avatar" />
 
     <EditText
         android:id="@+id/edit_captcha"
@@ -33,7 +33,9 @@
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.566" />
+        app:layout_constraintVertical_bias="0.566"
+        android:autofillHints="@string/captcha_input_hint"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/edit_phone_number"
@@ -47,7 +49,10 @@
         app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.46" />
+        app:layout_constraintVertical_bias="0.46"
+        android:autofillHints="@string/phone_input_hint"
+        android:inputType="textPhonetic"
+        tools:ignore="TextFields" />
 
     <TextView
         android:layout_width="wrap_content"
