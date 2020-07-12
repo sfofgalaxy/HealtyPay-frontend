@@ -83,6 +83,16 @@ public class MyFragment extends Fragment {
             }
         });
 
+        ItemGroup item3 = root.findViewById(R.id.ig_feedback);
+        item3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), FeedBackActivity.class);
+                startActivity(i);
+            }
+        });
+
+
         return root;
     }
 
