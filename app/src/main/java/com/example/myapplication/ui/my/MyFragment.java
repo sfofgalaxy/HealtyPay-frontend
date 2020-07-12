@@ -87,7 +87,7 @@ public class MyFragment extends Fragment {
         item3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), BankCardInfo.class);
+                Intent i = new Intent(getActivity(), FeedBackActivity.class);
                 startActivity(i);
             }
         });
