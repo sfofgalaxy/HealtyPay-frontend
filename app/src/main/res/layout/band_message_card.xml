@@ -1,77 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="ExtraText">
+    android:orientation="vertical"
+    android:background="#d7d7d7">
 
+    <com.example.myapplication.ui.CustomTitleBar
+        android:id="@+id/titlebar_band"
+        android:background="#50c03a"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        app:left_icon="@drawable/arrow_left"
+        app:bar_title="绑定身份证"/>
 
-    <EditText
-        android:id="@+id/edit_phone_number"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:hint="@string/name_input_hint"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.445"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.068" />
+        android:background="#ffffff"
+        android:paddingTop="10dp">
 
-    <EditText
-        android:id="@+id/edit_phone_number2"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/band_name"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:paddingLeft="10dp"
+            android:text="姓名"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/edit_band_name"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingLeft="10dp"
+            android:background="@null"
+            android:hint="@string/name_input_hint"
+            android:textSize="22sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:hint="@string/id_input_hint"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.166" />
+        android:background="#ffffff">
+        <TextView
+            android:id="@+id/band_card"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:paddingLeft="10dp"
+            android:text="身份证号"
+            android:textSize="20sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/edit_band_card"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingLeft="10dp"
+            android:background="@null"
+            android:hint="@string/id_input_hint"
+            android:textSize="22sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="姓名"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.082"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.072" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="身份证号"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.082"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.17" />
-
-    <Button
-        android:layout_width="147dp"
-        android:layout_height="41dp"
-        android:background="@drawable/button_shape_green"
-        android:text="@string/band"
-        android:textColor="@color/titleTextColor"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.792" />
+        android:gravity="center|center_horizontal|center_vertical" >>
+        <Button
+            android:layout_width="147dp"
+            android:layout_height="41dp"
+            android:layout_margin="40dp"
+            android:background="@drawable/button_shape_green"
+            android:text="@string/band"
+            android:textColor="@color/titleTextColor"
+            android:textSize="25sp" />
+    </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
