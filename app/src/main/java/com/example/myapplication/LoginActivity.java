@@ -1,6 +1,4 @@
 package com.example.myapplication;
-
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -24,7 +22,6 @@ import com.example.myapplication.utils.JsonUtil;
 import com.example.myapplication.utils.SharedPreferencesUtil;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +43,7 @@ public class LoginActivity extends Activity {
     private Button mSendCaptchaButton;
     private TimeCount time;
     private Context context;
-
+    private View focusView;
     //用于发送完验证码倒计时的类
     class TimeCount extends CountDownTimer {
         public TimeCount(long millisInFuture, long countDownInterval) {
@@ -66,10 +63,9 @@ public class LoginActivity extends Activity {
             mSendCaptchaButton.setBackgroundColor(Color.parseColor("#D7D7D7"));
         }
     }
-
-    private View focusView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //每个activity需获取
         context = getApplicationContext();
         super.onCreate(savedInstanceState);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -200,11 +196,33 @@ public class LoginActivity extends Activity {
     }
 
     private boolean isPhoneValid(String phone) {
-        return phone.length()==11;
+        boolean valid = true;
+        if(phone.length()!=11){
+            valid=false;
+        }else{
+            char[] chars = phone.toCharArray();
+            for(char a:chars){
+                if(a<'0'||a>'9'){
+                    valid=false;
+                }
+            }
+        }
+        return valid;
     }
 
     private boolean isCaptchaValid(String captcha) {
-        return captcha.length() == 6;
+        boolean valid = true;
+        if(captcha.length()!=6){
+            valid=false;
+        }else{
+            char[] chars = captcha.toCharArray();
+            for(char a:chars){
+                if(a<'0'||a>'9'){
+                    valid=false;
+                }
+            }
+        }
+        return valid;
     }
 }
 
