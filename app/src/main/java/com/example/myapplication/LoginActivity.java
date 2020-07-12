@@ -52,9 +52,9 @@ public class LoginActivity extends Activity {
         @SuppressLint("SetTextI18n")
         @Override
         public void onTick(long millisUntilFinished) {
-            mSendCaptchaButton.setBackgroundColor(Color.parseColor("#FFD700"));
+            mSendCaptchaButton.setTextColor(Color.parseColor("#FFFFFF"));
             mSendCaptchaButton.setClickable(false);
-            mSendCaptchaButton.setText("("+millisUntilFinished / 1000 +") 秒");
+            mSendCaptchaButton.setText("("+millisUntilFinished / 1000 +") s");
         }
         @Override
         public void onFinish() {
