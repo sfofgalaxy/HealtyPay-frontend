@@ -3,12 +3,9 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -49,15 +46,15 @@ public class LoginActivity extends Activity {
         @SuppressLint("SetTextI18n")
         @Override
         public void onTick(long millisUntilFinished) {
-            mSendCaptchaButton.setBackgroundColor(Color.parseColor("#B6B6D8"));
+            mSendCaptchaButton.setBackgroundColor(Color.parseColor("#FFD700"));
             mSendCaptchaButton.setClickable(false);
             mSendCaptchaButton.setText("("+millisUntilFinished / 1000 +") 秒");
         }
         @Override
         public void onFinish() {
-            mSendCaptchaButton.setText("重新获取验证码");
+            mSendCaptchaButton.setText("重新获取");
             mSendCaptchaButton.setClickable(true);
-            mSendCaptchaButton.setBackgroundColor(Color.parseColor("#4EB84A"));
+            mSendCaptchaButton.setBackgroundColor(Color.parseColor("#D7D7D7"));
         }
     }
 
