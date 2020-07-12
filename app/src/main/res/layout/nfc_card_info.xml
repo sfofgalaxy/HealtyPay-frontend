@@ -13,12 +13,12 @@
     android:id="@+id/bank_card_info">
 
     <com.example.myapplication.ui.CustomTitleBar
-        android:id="@+id/titlebar_bank"
+        android:id="@+id/nfc_card"
         android:background="#50c03a"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:scaleType="centerCrop"
         app:left_icon="@drawable/arrow_left"
         app:button_visible="true"
-        app:bar_title="银行卡" />
+        app:bar_title="公交卡" />
 </LinearLayout>
