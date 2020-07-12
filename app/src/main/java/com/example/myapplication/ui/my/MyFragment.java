@@ -1,9 +1,11 @@
 package com.example.myapplication.ui.my;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,14 +24,15 @@ public class MyFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         myViewModel =
                 ViewModelProviders.of(this).get(MyViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_service, container, false);
-        final TextView textView = root.findViewById(R.id.text_my);
-        myViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        View root = inflater.inflate(R.layout.fragment_my, container, false);
+        final TextView textView = root.findViewById(R.id.check_message);
+        textView.setText("17326000000");
+//        nfcViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+//            }
+//        });
         return root;
     }
 }
