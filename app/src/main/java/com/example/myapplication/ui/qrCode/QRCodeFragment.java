@@ -2,6 +2,7 @@ package com.example.myapplication.ui.qrCode;
 
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +31,11 @@ public class QRCodeFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_qrcode, container, false);
 
         ImageView qrCodeImageView = root.findViewById(R.id.qrcodeImage);
-        qrCodeImageView.setImageBitmap(QRCodeUtil.createQRImage("http://47.94.46.115/", 140, 140));
+        //qrCodeImageView.setBackgroundResource(R.color.colorPrimary);
+        qrCodeImageView.setImageBitmap(QRCodeUtil.createQRImage("http://47.94.46.115/", 300, 300));
+        //qrCodeImageView.setBackgroundColor(Color.rgb(144, 238, 144));
+        //qrCodeImageView.setBackgroundResource(R.color.colorPrimary);
+        //qrCodeImageView.setBackground();
 
         ImageButton trImageButton = root.findViewById(R.id.transportImageButton);
         Log.d("button", "findSuccess");
