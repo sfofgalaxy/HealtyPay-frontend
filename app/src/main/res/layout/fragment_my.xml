@@ -43,7 +43,7 @@
     <com.example.myapplication.ui.my.ItemGroup
         android:id="@+id/ig_messagecard"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         app:paddingLeft="10dp"
         app:icon_src="@drawable/messagecard"
         app:title="身份信息" />
@@ -51,7 +51,7 @@
     <com.example.myapplication.ui.my.ItemGroup
         android:id="@+id/ig_moneycard"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         app:paddingLeft="10dp"
         app:icon_src="@drawable/moneycard"
         app:title="银行卡" />
@@ -59,7 +59,7 @@
     <com.example.myapplication.ui.my.ItemGroup
         android:id="@+id/ig_buscard"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         app:paddingLeft="10dp"
         app:icon_src="@drawable/buscard"
         app:title="乘车卡"/>
@@ -76,7 +76,7 @@
     <com.example.myapplication.ui.my.ItemGroup
         android:id="@+id/ig_bill"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         app:paddingLeft="10dp"
         app:icon_src="@drawable/bill"
         app:title="账单" />
@@ -84,7 +84,7 @@
     <com.example.myapplication.ui.my.ItemGroup
         android:id="@+id/ig_feedback"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         app:paddingLeft="10dp"
         app:icon_src="@drawable/feedback"
         app:title="反馈" />
