@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.my;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +12,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 
-public class BandMessageCard extends Fragment {
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.band_message_card, container, false);
-        return root;
+public class BandMessageCard extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.band_message_card);
     }
 }

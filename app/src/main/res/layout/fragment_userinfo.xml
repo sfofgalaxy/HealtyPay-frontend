@@ -11,25 +11,35 @@
     android:screenOrientation="portrait"
     android:theme="@style/Theme.ched">
 
+    <com.example.myapplication.ui.CustomTitleBar
+        android:id="@+id/titlebar"
+        android:background="#50c03a"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        app:titlebar_type="11"
+        app:left_icon="@drawable/arrow_left"
+        app:title="个人信息" />
+
     <!--    编辑界面，此处可以写成一个ItemGroup上传至com上-->
     <com.example.myapplication.ui.my.ItemGroup
         android:id="@+id/ig_name"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         app:paddingLeft="10dp"
         app:title="姓名" />
 
     <com.example.myapplication.ui.my.ItemGroup
         android:id="@+id/ig_card"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         app:paddingLeft="10dp"
         app:title="身份证" />
 
     <com.example.myapplication.ui.my.ItemGroup
         android:id="@+id/ig_number"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         app:paddingLeft="10dp"
         app:title="手机号"/>
 

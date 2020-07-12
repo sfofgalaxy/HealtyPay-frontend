@@ -32,5 +32,9 @@
         <attr name="drawable_right" format="reference" />
         <attr name="line_color" format="color" />
         <attr name="line_height" format="integer" />
+
+        <attr name="bar_title" format="string"/>
+        <attr name="left_icon" format="reference"/>
+        <attr name="titlebar_type" format="integer"/>
     </declare-styleable>
 </resources>
