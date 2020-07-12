@@ -11,13 +11,6 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 
-/**
- * @Author : 张
- * @Email : manitozhang@foxmail.com
- * @Date : 2018/9/19
- *
- * 一个简单的自定义标题栏
- */
 
 public class CustomTitleBar extends RelativeLayout {
 

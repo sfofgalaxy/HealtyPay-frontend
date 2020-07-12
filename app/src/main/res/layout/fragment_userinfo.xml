@@ -12,14 +12,13 @@
     android:theme="@style/Theme.ched">
 
     <com.example.myapplication.ui.CustomTitleBar
-        android:id="@+id/titlebar"
+        android:id="@+id/titlebar_info"
         android:background="#50c03a"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:scaleType="centerCrop"
-        app:titlebar_type="11"
         app:left_icon="@drawable/arrow_left"
-        app:title="个人信息" />
+        app:bar_title="个人信息" />
 
     <!--    编辑界面，此处可以写成一个ItemGroup上传至com上-->
     <com.example.myapplication.ui.my.ItemGroup
