@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -20,10 +19,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.myapplication.utils.HttpRequestUtil;
+import com.example.myapplication.utils.JsonUtil;
 import com.example.myapplication.utils.SharedPreferencesUtil;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -108,8 +107,12 @@ public class LoginActivity extends Activity {
         mSendCaptchaButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(attemptSendCaptcha(mPhoneView.getText().toString())){
-                    time.start();
+                try {
+                    if(attemptSendCaptcha(mPhoneView.getText().toString())){
+                        time.start();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -121,10 +124,12 @@ public class LoginActivity extends Activity {
     }
 
     //尝试发送验证码
-    private boolean attemptSendCaptcha(String phone) {
+    private boolean attemptSendCaptcha(String phone) throws JSONException {
         Map<String,String> postParams = new HashMap<>();
         postParams.put("phone",phone);
-        return HttpRequestUtil.sendPost(mSendCaptchaUrl, postParams) != null;
+        String result = HttpRequestUtil.sendPost(mSendCaptchaUrl,postParams);
+        //获取state判断发送是否成功
+        return JsonUtil.stringToJsonObject(result).getBoolean("state");
     }
 
     boolean checkForm() {
@@ -176,8 +181,7 @@ public class LoginActivity extends Activity {
              if(result==null){
                  System.out.println("登录失败");
              }else {
-                 JSONObject jsonObject = new JSONObject(result);
-                 SharedPreferencesUtil.putString(context,"token",jsonObject.getString("message"));
+                 SharedPreferencesUtil.putString(context,"token",JsonUtil.stringToJsonObject(result).getString("message"));
                  startActivity(new Intent(LoginActivity.this, MainActivity.class));
              }
 
