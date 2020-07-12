@@ -46,8 +46,8 @@
         android:id="@+id/band_button"
         android:layout_width="147dp"
         android:layout_height="41dp"
+        android:layout_marginLeft="160dp"
         android:layout_marginTop="480dp"
-        android:layout_marginLeft="130dp"
 
         android:background="@drawable/button_shape_green"
         android:text="发送"
