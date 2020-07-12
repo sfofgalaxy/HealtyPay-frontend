@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginTop="70dp"
-        android:background="#d7d7d7"
+        android:background="#f2f2f2"
         android:orientation="vertical">
 
         <TextView
@@ -46,8 +46,8 @@
         android:id="@+id/band_button"
         android:layout_width="147dp"
         android:layout_height="41dp"
+        android:layout_marginLeft="140dp"
         android:layout_marginTop="480dp"
-        android:layout_marginLeft="130dp"
 
         android:background="@drawable/button_shape_green"
         android:text="发送"
