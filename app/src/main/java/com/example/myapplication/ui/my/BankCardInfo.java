@@ -20,7 +20,7 @@ public class BankCardInfo extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), BankCardInfo.class);
+                Intent i = new Intent(BankCardInfo.this, BankCardInfo.class);
                 startActivity(i);
             }
         });
