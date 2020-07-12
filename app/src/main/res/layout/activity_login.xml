@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.566"
         android:autofillHints="@string/captcha_input_hint"
-        android:inputType="text" />
+        android:inputType="phone" />
 
     <EditText
         android:id="@+id/edit_phone_number"
