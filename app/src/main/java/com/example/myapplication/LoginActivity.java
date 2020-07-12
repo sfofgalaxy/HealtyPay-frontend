@@ -113,11 +113,10 @@ public class LoginActivity extends Activity {
                 }
             }
         });
-        //尝试使用 cookie中的token 自动登录
+        //尝试使用存储的token自动登录
         String token = SharedPreferencesUtil.getString(context,"token",null);
         if(token!=null&&!token.isEmpty()) {
-            //做一些操作
-            //startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
     }
 
@@ -167,8 +166,6 @@ public class LoginActivity extends Activity {
     private void attemptLogin(String phone, String captcha) throws JSONException {
         boolean cancel = checkForm();
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
            Map<String,String> postParams = new HashMap<>();
@@ -177,10 +174,11 @@ public class LoginActivity extends Activity {
             postParams.put("captcha",captcha);
             String result =  HttpRequestUtil.sendPost(mLoginUrl, postParams);
              if(result==null){
-                 System.out.println("登录后输出了null");
+                 System.out.println("登录失败");
              }else {
                  JSONObject jsonObject = new JSONObject(result);
                  SharedPreferencesUtil.putString(context,"token",jsonObject.getString("message"));
+                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
              }
 
         }
