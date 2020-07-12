@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginTop="70dp"
-        android:background="#d7d7d7"
+        android:background="#f2f2f2"
         android:orientation="vertical">
 
         <TextView
