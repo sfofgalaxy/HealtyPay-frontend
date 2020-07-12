@@ -1,9 +1,15 @@
 package com.example.myapplication;
 
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -12,10 +18,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.myapplication.utils.HttpRequestUtil;
 
 import org.json.JSONException;
+import org.xmlpull.v1.XmlPullParser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,11 +34,11 @@ import static com.example.myapplication.config.Config.getFullUrl;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
     private final String mLoginUrl = getFullUrl("/user/login");
     private final String mSendCaptchaUrl = getFullUrl("/user/sendCaptcha");
-    EditText mPhoneView = findViewById(R.id.edit_phone_number);
-    EditText mCaptchaView = findViewById(R.id.edit_captcha);
+    private EditText mPhoneView;
+    private EditText mCaptchaView;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -41,7 +49,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        mPhoneView = findViewById(R.id.edit_phone_number);
+        mCaptchaView = findViewById(R.id.edit_captcha);
         //输入完成验证码后点击回车键触发
         mCaptchaView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -83,9 +92,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //View mLoginFormView = findViewById(R.id.login_form);
+        View mLoginFormView = findViewById(R.id.login_form);
 
-//        //尝试使用 cookie中的token 自动登录
+        //尝试使用 cookie中的token 自动登录
 //        SharedPreferences sp = getSharedPreferences(getString(R.string.cookie_preference_file), MODE_PRIVATE);
 //        String localCookieStr = sp.getString("token", "");
 //        if(! localCookieStr.isEmpty()) {
