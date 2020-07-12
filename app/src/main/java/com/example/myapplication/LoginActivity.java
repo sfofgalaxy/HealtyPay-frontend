@@ -2,14 +2,10 @@ package com.example.myapplication;
 
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -17,13 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.example.myapplication.utils.HttpRequestUtil;
 
 import org.json.JSONException;
-import org.xmlpull.v1.XmlPullParser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,15 +31,13 @@ public class LoginActivity extends Activity {
     private final String mSendCaptchaUrl = getFullUrl("/user/sendCaptcha");
     private EditText mPhoneView;
     private EditText mCaptchaView;
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
-    private static final int REQUEST_READ_CONTACTS = 0;
 
     private View focusView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_login);
         mPhoneView = findViewById(R.id.edit_phone_number);
         mCaptchaView = findViewById(R.id.edit_captcha);
@@ -156,7 +146,7 @@ public class LoginActivity extends Activity {
             //发起登录或注册请求
             postParams.put("phone",phone);
             postParams.put("captcha",captcha);
-
+            System.out.println(postParams);
              String result =  HttpRequestUtil.sendPost(mLoginUrl, postParams);
              if(result==null){
                  System.out.println("登录后输出了null");
