@@ -78,14 +78,14 @@ public class LoginActivity extends Activity {
         mCaptchaView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login_button || id == EditorInfo.IME_NULL) {
-                    try {
-                        attemptLogin(mPhoneView.getText().toString(), mCaptchaView.getText().toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+            if (id == R.id.login_button || id == EditorInfo.IME_NULL) {
+                try {
+                    attemptLogin(mPhoneView.getText().toString(), mCaptchaView.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                return false;
+            }
+            return false;
             }
         });
         //点击登录按钮后触发
@@ -108,10 +108,9 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 try {
-                    if(attemptSendCaptcha(mPhoneView.getText().toString())){
-                        Toast.makeText(context, "获取验证码成功", Toast.LENGTH_SHORT).show();
-                        time.start();
-                    }
+                    attemptSendCaptcha(mPhoneView.getText().toString());
+                    Toast.makeText(context, "获取验证码成功", Toast.LENGTH_SHORT).show();
+                    time.start();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -135,12 +134,12 @@ public class LoginActivity extends Activity {
     }
 
     //尝试发送验证码
-    private boolean attemptSendCaptcha(String phone) throws JSONException {
+    private void attemptSendCaptcha(String phone) throws JSONException {
         Map<String,String> postParams = new HashMap<>();
         postParams.put("phone",phone);
         String result = HttpRequestUtil.sendPost(mSendCaptchaUrl,postParams);
         //获取state判断发送是否成功
-        return JsonUtil.stringToJsonObject(result).getBoolean("state");
+        JsonUtil.stringToJsonObject(result).getBoolean("state");
     }
 
     boolean checkForm() {
