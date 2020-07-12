@@ -24,6 +24,7 @@ import com.example.myapplication.utils.JsonUtil;
 import com.example.myapplication.utils.SharedPreferencesUtil;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -123,9 +124,9 @@ public class LoginActivity extends Activity {
         String token = SharedPreferencesUtil.getString(context,"token",null);
         if(token!=null&&!token.isEmpty()) {
             Map<String,String> param = new HashMap<>();
-            param.put("token",token);
+            param.put("key","value");
             try {
-                if(JsonUtil.stringToJsonObject(HttpRequestUtil.sendGet(mGetUserByTokenUrl,param)).getBoolean("state")){
+                if(JsonUtil.stringToJsonObject(HttpRequestUtil.sendGet(mGetUserByTokenUrl,param,token)).getBoolean("state")){
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }else{
                     SharedPreferencesUtil.remove(context,"token");
@@ -191,6 +192,7 @@ public class LoginActivity extends Activity {
              }else {
                  Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
                  SharedPreferencesUtil.putString(context,"token",JsonUtil.stringToJsonObject(result).getString("message"));
+                 System.out.println("从Json:"+JsonUtil.stringToJsonObject(result).getString("message"));
                  startActivity(new Intent(LoginActivity.this, MainActivity.class));
              }
 
