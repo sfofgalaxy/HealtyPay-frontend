@@ -17,6 +17,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.utils.HttpRequestUtil;
 import com.example.myapplication.utils.JsonUtil;
@@ -37,6 +38,7 @@ import static com.example.myapplication.config.Config.getFullUrl;
 public class LoginActivity extends Activity {
     private final String mLoginUrl = getFullUrl("/user/login");
     private final String mSendCaptchaUrl = getFullUrl("/user/sendCaptcha");
+    private final String mGetUserByTokenUrl = getFullUrl("/user");
     private EditText mPhoneView;
     private EditText mCaptchaView;
     private Button mLoginButton;
@@ -109,6 +111,7 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 try {
                     if(attemptSendCaptcha(mPhoneView.getText().toString())){
+                        Toast.makeText(context, "获取验证码成功", Toast.LENGTH_SHORT).show();
                         time.start();
                     }
                 } catch (JSONException e) {
@@ -119,7 +122,17 @@ public class LoginActivity extends Activity {
         //尝试使用存储的token自动登录
         String token = SharedPreferencesUtil.getString(context,"token",null);
         if(token!=null&&!token.isEmpty()) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            Map<String,String> param = new HashMap<>();
+            param.put("token",token);
+            try {
+                if(JsonUtil.stringToJsonObject(HttpRequestUtil.sendGet(mGetUserByTokenUrl,param)).getBoolean("state")){
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                }else{
+                    SharedPreferencesUtil.remove(context,"token");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -163,11 +176,6 @@ public class LoginActivity extends Activity {
         return cancel;
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     private void attemptLogin(String phone, String captcha) throws JSONException {
         boolean cancel = checkForm();
         if (cancel) {
@@ -179,8 +187,9 @@ public class LoginActivity extends Activity {
             postParams.put("captcha",captcha);
             String result =  HttpRequestUtil.sendPost(mLoginUrl, postParams);
              if(result==null){
-                 System.out.println("登录失败");
+                 Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show();
              }else {
+                 Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
                  SharedPreferencesUtil.putString(context,"token",JsonUtil.stringToJsonObject(result).getString("message"));
                  startActivity(new Intent(LoginActivity.this, MainActivity.class));
              }
