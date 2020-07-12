@@ -1,6 +1,4 @@
 package com.example.myapplication;
-
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -45,7 +43,7 @@ public class LoginActivity extends Activity {
     private Button mSendCaptchaButton;
     private TimeCount time;
     private Context context;
-
+    private View focusView;
     //用于发送完验证码倒计时的类
     class TimeCount extends CountDownTimer {
         public TimeCount(long millisInFuture, long countDownInterval) {
@@ -54,9 +52,9 @@ public class LoginActivity extends Activity {
         @SuppressLint("SetTextI18n")
         @Override
         public void onTick(long millisUntilFinished) {
-            mSendCaptchaButton.setBackgroundColor(Color.parseColor("#FFD700"));
+            mSendCaptchaButton.setTextColor(Color.parseColor("#FFFFFF"));
             mSendCaptchaButton.setClickable(false);
-            mSendCaptchaButton.setText("("+millisUntilFinished / 1000 +") 秒");
+            mSendCaptchaButton.setText("("+millisUntilFinished / 1000 +") s");
         }
         @Override
         public void onFinish() {
@@ -65,10 +63,9 @@ public class LoginActivity extends Activity {
             mSendCaptchaButton.setBackgroundColor(Color.parseColor("#D7D7D7"));
         }
     }
-
-    private View focusView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //每个activity需获取
         context = getApplicationContext();
         super.onCreate(savedInstanceState);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -123,9 +120,9 @@ public class LoginActivity extends Activity {
         String token = SharedPreferencesUtil.getString(context,"token",null);
         if(token!=null&&!token.isEmpty()) {
             Map<String,String> param = new HashMap<>();
-            param.put("token",token);
+            param.put("key","value");
             try {
-                if(JsonUtil.stringToJsonObject(HttpRequestUtil.sendGet(mGetUserByTokenUrl,param)).getBoolean("state")){
+                if(JsonUtil.stringToJsonObject(HttpRequestUtil.sendGet(mGetUserByTokenUrl,param,token)).getBoolean("state")){
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }else{
                     SharedPreferencesUtil.remove(context,"token");
@@ -191,6 +188,7 @@ public class LoginActivity extends Activity {
              }else {
                  Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
                  SharedPreferencesUtil.putString(context,"token",JsonUtil.stringToJsonObject(result).getString("message"));
+                 System.out.println("从Json:"+JsonUtil.stringToJsonObject(result).getString("message"));
                  startActivity(new Intent(LoginActivity.this, MainActivity.class));
              }
 
@@ -198,11 +196,33 @@ public class LoginActivity extends Activity {
     }
 
     private boolean isPhoneValid(String phone) {
-        return phone.length()==11;
+        boolean valid = true;
+        if(phone.length()!=11){
+            valid=false;
+        }else{
+            char[] chars = phone.toCharArray();
+            for(char a:chars){
+                if(a<'0'||a>'9'){
+                    valid=false;
+                }
+            }
+        }
+        return valid;
     }
 
     private boolean isCaptchaValid(String captcha) {
-        return captcha.length() == 6;
+        boolean valid = true;
+        if(captcha.length()!=6){
+            valid=false;
+        }else{
+            char[] chars = captcha.toCharArray();
+            for(char a:chars){
+                if(a<'0'||a>'9'){
+                    valid=false;
+                }
+            }
+        }
+        return valid;
     }
 }
 
