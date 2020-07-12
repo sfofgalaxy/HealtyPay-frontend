@@ -75,20 +75,6 @@
         app:layout_constraintVertical_bias="0.116" />
 
 
-    <TextView
-
-
-        android:layout_width="123dp"
-        android:layout_height="37dp"
-        android:text="健康付"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintHorizontal_bias="0.588"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.04" />
-
     <View
 
         android:id="@+id/view6"
