@@ -1,8 +1,14 @@
 package com.example.myapplication;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -23,6 +29,7 @@ import java.util.Map;
 import static com.example.myapplication.config.Config.getFullUrl;
 
 
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -31,6 +38,28 @@ public class LoginActivity extends Activity {
     private final String mSendCaptchaUrl = getFullUrl("/user/sendCaptcha");
     private EditText mPhoneView;
     private EditText mCaptchaView;
+    private Button mLoginButton;
+    private Button mSendCaptchaButton;
+    private TimeCount time;
+    //用于发送完验证码倒计时的类
+    class TimeCount extends CountDownTimer {
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onTick(long millisUntilFinished) {
+            mSendCaptchaButton.setBackgroundColor(Color.parseColor("#B6B6D8"));
+            mSendCaptchaButton.setClickable(false);
+            mSendCaptchaButton.setText("("+millisUntilFinished / 1000 +") 秒");
+        }
+        @Override
+        public void onFinish() {
+            mSendCaptchaButton.setText("重新获取验证码");
+            mSendCaptchaButton.setClickable(true);
+            mSendCaptchaButton.setBackgroundColor(Color.parseColor("#4EB84A"));
+        }
+    }
 
     private View focusView;
     @Override
@@ -57,7 +86,7 @@ public class LoginActivity extends Activity {
             }
         });
         //点击登录按钮后触发
-        Button mLoginButton = findViewById(R.id.login_button);
+        mLoginButton = findViewById(R.id.login_button);
         mLoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,22 +98,19 @@ public class LoginActivity extends Activity {
             }
         });
 
+        time = new TimeCount(60000, 1000);
         //点击发送验证码按钮
-        Button mSendCaptchaButton = findViewById(R.id.send_captcha);
+        mSendCaptchaButton = findViewById(R.id.send_captcha);
         mSendCaptchaButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    attemptSendCaptcha(mPhoneView.getText().toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if(attemptSendCaptcha(mPhoneView.getText().toString())){
+                    time.start();
                 }
             }
         });
 
-        View mLoginFormView = findViewById(R.id.login_form);
-
-        //尝试使用 cookie中的token 自动登录
+//        //尝试使用 cookie中的token 自动登录
 //        SharedPreferences sp = getSharedPreferences(getString(R.string.cookie_preference_file), MODE_PRIVATE);
 //        String localCookieStr = sp.getString("token", "");
 //        if(! localCookieStr.isEmpty()) {
@@ -93,10 +119,10 @@ public class LoginActivity extends Activity {
     }
 
     //尝试发送验证码
-    private void attemptSendCaptcha(String phone) throws JSONException {
+    private boolean attemptSendCaptcha(String phone) {
         Map<String,String> postParams = new HashMap<>();
         postParams.put("phone",phone);
-        System.out.println(HttpRequestUtil.sendPost(mSendCaptchaUrl,postParams));
+        return HttpRequestUtil.sendPost(mSendCaptchaUrl, postParams) != null;
     }
 
     boolean checkForm() {
@@ -111,7 +137,7 @@ public class LoginActivity extends Activity {
         boolean cancel = false;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(phone) && !isCaptchaValid(captcha)) {
+        if (!TextUtils.isEmpty(captcha) && !isCaptchaValid(captcha)) {
             mCaptchaView.setError(getString(R.string.error_invalid_captcha));
             focusView = mCaptchaView;
             cancel = true;
@@ -146,11 +172,11 @@ public class LoginActivity extends Activity {
             //发起登录或注册请求
             postParams.put("phone",phone);
             postParams.put("captcha",captcha);
-            System.out.println(postParams);
-             String result =  HttpRequestUtil.sendPost(mLoginUrl, postParams);
+            String result =  HttpRequestUtil.sendPost(mLoginUrl, postParams);
              if(result==null){
                  System.out.println("登录后输出了null");
              }else {
+                 //{"state":true,"message":"c27a8b436fde08f5471cb7b3085de7f8"}
                  System.out.println(result);
              }
 
@@ -162,7 +188,7 @@ public class LoginActivity extends Activity {
     }
 
     private boolean isCaptchaValid(String captcha) {
-        return captcha.length() == 4;
+        return captcha.length() == 6;
     }
 
 
