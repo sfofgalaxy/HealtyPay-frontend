@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.my;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,14 +13,27 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.myapplication.LoginActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.utils.HttpRequestUtil;
+import com.example.myapplication.utils.JsonUtil;
+import com.example.myapplication.utils.SharedPreferencesUtil;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.jar.Attributes;
+
+import static com.example.myapplication.config.Config.getFullUrl;
 
 public class CardInfo extends FrameLayout {
 
@@ -27,6 +41,7 @@ public class CardInfo extends FrameLayout {
     private TextView message; //标题
     private Button button; //向右的箭头
     private ImageView Icon;
+    private final String mDeleteBankCardUrl = getFullUrl("/bankCard/deleteBankCard");
 
 
 
@@ -113,7 +128,7 @@ public class CardInfo extends FrameLayout {
 
     }
 
-    public CardInfo(@NonNull Context context, @Nullable Attributes attrs) {
+    public CardInfo(@NonNull final Context context, @Nullable final Attributes attrs) {
         super(context);
         initView(context);
         //标题的默认字体颜色
@@ -129,7 +144,7 @@ public class CardInfo extends FrameLayout {
         float paddingRight = 5;
         float paddingTop = 5;
         float paddingBottom = 5;
-        float titleSize = 20;
+        float titleSize = 16;
         int titleColor = defaultTitleColor;
 
         int drawableId = Integer.parseInt(attrs.getValue("drawableId"));
@@ -146,5 +161,38 @@ public class CardInfo extends FrameLayout {
         }else{
             Icon.setVisibility(View.GONE);
         }
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String token = SharedPreferencesUtil.getString(context,"token",null);
+                if(token == null){
+                    Toast.makeText(context, "登录已过期", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Map<String,String> postParams = new HashMap<>();
+                postParams.put("token",token);
+                postParams.put("cardNumber",attrs.getValue("cardNumber"));
+                String result = HttpRequestUtil.sendPost(mDeleteBankCardUrl,postParams,token);
+                /*重要，需要判断token的位置*/
+                if(result==null|| result.equals("")){
+                    //证明此时token虽然在手机缓存有但已经过期，同样需要跳转到登录页面
+                    Toast.makeText(context, "登录已过期", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    Boolean state = JsonUtil.stringToJsonObject(result).getBoolean("state");
+                    if(state){
+                        Toast.makeText(context, "解绑成功", Toast.LENGTH_SHORT).show();
+                        cardInfoLayout.setVisibility(GONE);
+                    }else{
+                        Toast.makeText(context, "解绑失败", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
 }

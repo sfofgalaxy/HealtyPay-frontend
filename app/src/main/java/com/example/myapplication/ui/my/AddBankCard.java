@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myapplication.LoginActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.CustomTitleBar;
 import com.example.myapplication.utils.HttpRequestUtil;
@@ -33,7 +34,7 @@ public class AddBankCard extends Activity {
 
         context = getApplicationContext();
 
-        CustomTitleBar titleBar = findViewById(R.id.titlebar_band);
+        CustomTitleBar titleBar = findViewById(R.id.titlebar_add_bank);
         titleBar.setLeftIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,12 +56,23 @@ public class AddBankCard extends Activity {
                     Toast.makeText(AddBankCard.this, "请输入正确的信息", Toast.LENGTH_SHORT).show();
                 }else{
                     String token = SharedPreferencesUtil.getString(context,"token",null);
+                    /*重要，需要判断token的位置*/
+                    if(token==null){
+                        //整明本地缓存中没有token，需要跳转到登录页面
+                        Toast.makeText(context, "登录已过期", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AddBankCard.this, LoginActivity.class));
+                    }
                     Map<String,String> postParams = new HashMap<>();
                     postParams.put("token",token);
                     postParams.put("cardNumber",bankNumber);
                     postParams.put("password",password);
                     postParams.put("phone",phone);
                     String result = HttpRequestUtil.sendPost(mPutUserIdByTokenUrl,postParams,token);
+                    if(result==null|| result.equals("")){
+                        //证明此时token虽然在手机缓存有但已经过期，同样需要跳转到登录页面
+                        Toast.makeText(context, "登录已过期", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AddBankCard.this, LoginActivity.class));
+                    }
                     try {
                         Boolean status = JsonUtil.stringToJsonObject(result).getBoolean("state");
                         if (status){

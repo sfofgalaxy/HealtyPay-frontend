@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:textColor="#ffffff"
-            android:textSize="25sp"
+            android:textSize="18sp"
             android:paddingLeft="20dp"
             tools:text="身份信息" />
 
