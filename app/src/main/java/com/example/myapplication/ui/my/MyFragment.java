@@ -65,11 +65,20 @@ public class MyFragment extends Fragment {
             e.printStackTrace();
         }
 
-        ItemGroup item = root.findViewById(R.id.ig_messagecard);
-        item.setOnClickListener(new View.OnClickListener() {
+        ItemGroup item1 = root.findViewById(R.id.ig_messagecard);
+        item1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), UserInfoActivity.class);
+                startActivity(i);
+            }
+        });
+
+        ItemGroup item2 = root.findViewById(R.id.ig_moneycard);
+        item2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), BankCardInfo.class);
                 startActivity(i);
             }
         });

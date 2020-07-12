@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.my.MyFragment"
+    android:orientation="vertical"
+    android:background="#d7d7d7"
+    android:name=".CommentActivity"
+    android:screenOrientation="portrait"
+    android:theme="@style/Theme.ched">
+
+    <com.example.myapplication.ui.CustomTitleBar
+        android:id="@+id/titlebar_bank"
+        android:background="#50c03a"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        app:left_icon="@drawable/arrow_left"
+        app:button_visible="true"
+        app:bar_title="银行卡绑定" />
+
+    <!--    编辑界面，此处可以写成一个ItemGroup上传至com上-->
+    <com.example.myapplication.ui.my.ItemGroup
+        android:id="@+id/ig_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:paddingLeft="10dp"
+        app:title="姓名" />
+
+    <com.example.myapplication.ui.my.ItemGroup
+        android:id="@+id/ig_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:paddingLeft="10dp"
+        app:title="身份证" />
+
+    <com.example.myapplication.ui.my.ItemGroup
+        android:id="@+id/ig_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:paddingLeft="10dp"
+        app:title="手机号"/>
+
+    <!--    <com.example.myapplication.ui.my.ItemGroup-->
+    <!--        android:id="@+id/ig_region"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="46dp"-->
+    <!--        app:paddingLeft="10dp"-->
+    <!--        app:edt_content="0.00元"-->
+    <!--        app:icon_src="@drawable/leftmoney"-->
+    <!--        app:title="余额" />-->
+</LinearLayout>
