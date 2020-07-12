@@ -23,4 +23,5 @@
     <string name="payMethodTipString">优先使用此方式支付</string>
     <string name="nfc_pay">付款</string>
     <string name="nfc_transport">乘车码</string>
+    <string name="swipe_card_hint">请将公交卡放入手机NFC感应区</string>
 </resources>

@@ -5,10 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
