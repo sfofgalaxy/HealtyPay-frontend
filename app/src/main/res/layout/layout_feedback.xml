@@ -15,11 +15,12 @@
         app:left_icon="@drawable/arrow_left"
         app:bar_title="绑定身份证"/>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_marginTop="100dp"
-        android:background="#d7d7d7" >
+        android:layout_marginTop="70dp"
+        android:background="#d7d7d7"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/band_card"
@@ -29,7 +30,27 @@
             android:text="填写问题或意见"
             android:textSize="20sp" />
 
-        <T>
 
-    </FrameLayout>
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="295dp"
+            android:background="@color/cardview_light_background"
+
+            />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/band_button"
+        android:layout_width="147dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="480dp"
+        android:layout_marginLeft="130dp"
+
+        android:background="@drawable/button_shape_green"
+        android:text="@string/band"
+        android:textColor="@color/titleTextColor"
+        android:textSize="25sp" />
 </FrameLayout>
