@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.myapplication.LoginActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.CustomTitleBar;
 import com.example.myapplication.utils.HttpRequestUtil;
@@ -43,13 +45,29 @@ public class UserInfoActivity extends Activity {
         item3.findViewById(R.id.jt_right_iv).setVisibility(View.GONE);
 
         String token = SharedPreferencesUtil.getString(context,"token",null);
+
+        /*重要，需要判断token的位置*/
+        if(token==null){
+            //整明本地缓存中没有token，需要跳转到登录页面
+            Toast.makeText(context, "登录已过期", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(UserInfoActivity.this, LoginActivity.class));
+        }
+
         Map<String,String> getParams = new HashMap<>();
         getParams.put("token",token);
         String result = HttpRequestUtil.sendGet(mGetUserIdByTokenUrl,getParams,token);
+
+        /*重要，需要判断token的位置*/
+        if(result==null|| result.equals("")){
+            //证明此时token虽然在手机缓存有但已经过期，同样需要跳转到登录页面
+            Toast.makeText(context, "登录已过期", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(UserInfoActivity.this, LoginActivity.class));
+        }
+
         try {
             String message = JsonUtil.stringToJsonObject(result).getString("message");
             final String userInfo = HttpRequestUtil.sendGet(mGetUserByTokenUrl, getParams, token);
-            if (message == "null"){
+            if (message.equals("null")){
                 TextView textView = item2.findViewById(R.id.content_edt);
                 textView.setText("未绑定");
                 textView.setTextColor(Color.rgb(255,0,0));
@@ -57,7 +75,6 @@ public class UserInfoActivity extends Activity {
                 TextView textView3 = item3.findViewById(R.id.content_edt);
                 textView3.setText(number);
                 item2.findViewById(R.id.jt_right_iv).setVisibility(View.VISIBLE);
-
                 item2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

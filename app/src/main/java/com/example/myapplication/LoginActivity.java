@@ -1,4 +1,5 @@
 package com.example.myapplication;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -19,7 +20,6 @@ import android.widget.Toast;
 
 import com.example.myapplication.utils.HttpRequestUtil;
 import com.example.myapplication.utils.JsonUtil;
-import com.example.myapplication.utils.QRCodeUtil;
 import com.example.myapplication.utils.SharedPreferencesUtil;
 
 import org.json.JSONException;
