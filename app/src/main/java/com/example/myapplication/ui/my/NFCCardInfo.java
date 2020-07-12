@@ -37,7 +37,7 @@ public class NFCCardInfo extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nfc_card_info);
-        LinearLayout bankCardInfo = findViewById(R.id.bank_card_info);
+        LinearLayout nfcCardInfo = findViewById(R.id.nfc_card_info);
         context = getApplicationContext();
         CustomTitleBar titleBar = findViewById(R.id.nfc_card);
         titleBar.setLeftIconOnClickListener(new View.OnClickListener() {
@@ -75,8 +75,7 @@ public class NFCCardInfo extends Activity {
                     }
                     attributes.putValue("drawableId",String.valueOf(source_id));
                     CardInfo cardInfo = new CardInfo(context,attributes);
-                    bankCardInfo.addView(cardInfo);
-
+                    nfcCardInfo.addView(cardInfo);
                 }
             }
         }catch (JSONException e) {

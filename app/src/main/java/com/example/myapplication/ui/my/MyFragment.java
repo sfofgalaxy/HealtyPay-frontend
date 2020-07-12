@@ -93,8 +93,26 @@ public class MyFragment extends Fragment {
             }
         });
 
-        ItemGroup item3 = root.findViewById(R.id.ig_feedback);
+        ItemGroup item3 = root.findViewById(R.id.ig_buscard);
         item3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), NFCCardInfo.class);
+                startActivity(i);
+            }
+        });
+
+        ItemGroup item4 = root.findViewById(R.id.ig_bill);
+        item4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), BillActivity.class);
+                startActivity(i);
+            }
+        });
+
+        ItemGroup item5 = root.findViewById(R.id.ig_feedback);
+        item5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), FeedBackActivity.class);

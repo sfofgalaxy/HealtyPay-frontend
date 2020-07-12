@@ -85,6 +85,11 @@
                 <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
             </intent-filter>
         </activity>
+        <activity android:name=".ui.my.NFCCardInfo">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -10,7 +10,7 @@
     android:name=".CommentActivity"
     android:screenOrientation="portrait"
     android:theme="@style/Theme.ched"
-    android:id="@+id/bank_card_info">
+    android:id="@+id/nfc_card_info">
 
     <com.example.myapplication.ui.CustomTitleBar
         android:id="@+id/nfc_card"

@@ -27,18 +27,19 @@ import static com.example.myapplication.config.Config.getFullUrl;
 public class BindNfcCard extends Activity {
     private Context context;
     private final String mBindNFCUrl = getFullUrl("/NFC/saveTag");
-    public final NFCUtil nfcUtil = NFCUtil.getInstance();;
+    public NFCUtil nfcUtil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_bank_card);
+        setContentView(R.layout.bind_nfc_card);
         context = getApplicationContext();
+        nfcUtil =  NFCUtil.getInstance();
         String content = nfcUtil.read();
         if (content != null)
             Toast.makeText(BindNfcCard.this, "NFC中包含的内容:" + content, Toast.LENGTH_SHORT).show();
-        else
+        else{
             Toast.makeText(BindNfcCard.this, "未检测到NFC芯片", Toast.LENGTH_SHORT).show();
-
+        }
         CustomTitleBar titleBar = findViewById(R.id.bind_nfc_card);
         titleBar.setLeftIconOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +48,7 @@ public class BindNfcCard extends Activity {
             }
         });
 
-        Button button_band = findViewById(R.id.bank_bank_button);
+        Button button_band = findViewById(R.id.bind_nfc_button);
         button_band.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
