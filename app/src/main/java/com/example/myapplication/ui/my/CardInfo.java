@@ -1,7 +1,6 @@
 package com.example.myapplication.ui.my;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,15 +18,12 @@ import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.myapplication.LoginActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.utils.HttpRequestUtil;
 import com.example.myapplication.utils.JsonUtil;
 import com.example.myapplication.utils.SharedPreferencesUtil;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;

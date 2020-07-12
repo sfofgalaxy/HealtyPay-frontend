@@ -4,16 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
+import com.example.myapplication.LoginActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.CustomTitleBar;
 import com.example.myapplication.utils.HttpRequestUtil;
@@ -58,11 +54,23 @@ public class BandMessageCard extends Activity {
                     Toast.makeText(BandMessageCard.this, "请输入正确的身份证号", Toast.LENGTH_SHORT).show();
                 }else{
                     String token = SharedPreferencesUtil.getString(context,"token",null);
+                    /*重要，需要判断token的位置*/
+                    if(token==null){
+                        //整明本地缓存中没有token，需要跳转到登录页面
+                        Toast.makeText(context, "登录已过期", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(BandMessageCard.this, LoginActivity.class));
+                    }
                     Map<String,String> putParams = new HashMap<>();
                     putParams.put("token",token);
                     putParams.put("name",name);
                     putParams.put("ID",card);
                     String result = HttpRequestUtil.sendPut(mPutUserIdByTokenUrl,putParams,token);
+                    /*重要，需要判断token的位置*/
+                    if(result==null|| result.equals("")){
+                        //证明此时token虽然在手机缓存有但已经过期，同样需要跳转到登录页面
+                        Toast.makeText(context, "登录已过期", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(BandMessageCard.this, LoginActivity.class));
+                    }
                     try {
                         Boolean status = JsonUtil.stringToJsonObject(result).getBoolean("state");
                         if (status){

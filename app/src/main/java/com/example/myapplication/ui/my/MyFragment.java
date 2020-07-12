@@ -1,30 +1,25 @@
 package com.example.myapplication.ui.my;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.LoginActivity;
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.utils.HttpRequestUtil;
 import com.example.myapplication.utils.JsonUtil;
 import com.example.myapplication.utils.SharedPreferencesUtil;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,9 +44,22 @@ public class MyFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_my, container, false);
         final TextView textView = root.findViewById(R.id.check_message);
         String token = SharedPreferencesUtil.getString(context,"token",null);
+        /*重要，需要判断token的位置*/
+        if(token==null){
+            //整明本地缓存中没有token，需要跳转到登录页面
+            Toast.makeText(context, "登录已过期", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        }
         Map<String,String> getParams = new HashMap<>();
         getParams.put("token",token);
         String result = HttpRequestUtil.sendGet(mGetUserIdByTokenUrl,getParams,token);
+
+        /*重要，需要判断token的位置*/
+        if(result==null|| result.equals("")){
+            //证明此时token虽然在手机缓存有但已经过期，同样需要跳转到登录页面
+            Toast.makeText(context, "登录已过期", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        }
         try {
             String message = JsonUtil.stringToJsonObject(result).getString("message");
             if (message == "null"){
