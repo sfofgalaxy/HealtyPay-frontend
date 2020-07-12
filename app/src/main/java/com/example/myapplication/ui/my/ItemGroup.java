@@ -83,7 +83,7 @@ public class ItemGroup extends FrameLayout{
         float paddingRight = typedArray.getDimension(R.styleable.ItemGroup_paddingRight, 5);
         float paddingTop = typedArray.getDimension(R.styleable.ItemGroup_paddingTop, 5);
         float paddingBottom = typedArray.getDimension(R.styleable.ItemGroup_paddingTop, 5);
-        float titleSize = typedArray.getDimension(R.styleable.ItemGroup_title_size, 15);
+        float titleSize = typedArray.getDimension(R.styleable.ItemGroup_title_size, 20);
         int titleColor = typedArray.getColor(R.styleable.ItemGroup_title_color, defaultTitleColor);
         String content = typedArray.getString(R.styleable.ItemGroup_edt_content);
         float contentSize = typedArray.getDimension(R.styleable.ItemGroup_edt_text_size, 13);
@@ -95,7 +95,7 @@ public class ItemGroup extends FrameLayout{
         //向右的箭头图标是否可见，默认可见
         boolean showJtIcon = typedArray.getBoolean(R.styleable.ItemGroup_jt_visible, true);
 
-        int drawableId = typedArray.getResourceId(R.styleable.ItemGroup_icon_src,R.drawable.messagecard);
+        int drawableId = typedArray.getResourceId(R.styleable.ItemGroup_icon_src,0);
         typedArray.recycle();
 
         //设置数据
@@ -113,8 +113,13 @@ public class ItemGroup extends FrameLayout{
 //        contentEdt.setFocusable(isEditable); //设置输入框是否可以编辑
 //        contentEdt.setClickable(true);
 //        contentEdt.setKeyListener(null);
-        Bitmap gameStatusBitmap = BitmapFactory.decodeResource(getResources(), drawableId);
-        igIcon.setImageBitmap(gameStatusBitmap);
+        if (drawableId != 0){
+            Bitmap gameStatusBitmap = BitmapFactory.decodeResource(getResources(), drawableId);
+            igIcon.setImageBitmap(gameStatusBitmap);
+        }else{
+            igIcon.setVisibility(View.GONE);
+        }
+
         jtRightIv.setVisibility(showJtIcon ? View.VISIBLE : View.GONE);  //设置向右的箭头图标是否可见
 
     }
