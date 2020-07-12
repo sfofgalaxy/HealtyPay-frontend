@@ -36,8 +36,10 @@ public class MyFragment extends Fragment {
 
     private MyViewModel myViewModel;
     private Context context;
-    private final String mGetUserIdByTokenUrl = getFullUrl("/user/Id");
+    private final String mGetUserIdByTokenUrl = getFullUrl("/user/ID");
     private final String mGetUserByTokenUrl = getFullUrl("/user");
+    //是否第一次加载
+    private boolean isFirstLoading = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,16 +52,17 @@ public class MyFragment extends Fragment {
         Map<String,String> getParams = new HashMap<>();
         getParams.put("token",token);
         String result = HttpRequestUtil.sendGet(mGetUserIdByTokenUrl,getParams,token);
-        if (result == null){
-            textView.setText("请先验证身份信息");
-        }else{
-            try {
+        try {
+            String message = JsonUtil.stringToJsonObject(result).getString("message");
+            if (message == "null"){
+                textView.setText("请先验证身份信息");
+            }else{
                 String userInfo = HttpRequestUtil.sendGet(mGetUserByTokenUrl,getParams,token);
                 String name = JsonUtil.stringToJsonObject(userInfo).getJSONObject("user").getString("name");
                 textView.setText(name);
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
+        }catch (JSONException e) {
+            e.printStackTrace();
         }
 
         ItemGroup item = root.findViewById(R.id.ig_messagecard);
@@ -72,5 +75,18 @@ public class MyFragment extends Fragment {
         });
 
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!isFirstLoading) {
+            //如果不是第一次加载，刷新数据
+            getActivity().recreate();
+            this.onHiddenChanged(false);
+        }
+
+        isFirstLoading = false;
     }
 }

@@ -3,17 +3,11 @@ package com.example.myapplication.ui.my;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.CustomTitleBar;
 import com.example.myapplication.utils.HttpRequestUtil;
@@ -22,7 +16,6 @@ import com.example.myapplication.utils.SharedPreferencesUtil;
 
 import org.json.JSONException;
 
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,8 +23,11 @@ import static com.example.myapplication.config.Config.getFullUrl;
 
 public class UserInfoActivity extends Activity {
     private Context context;
-    private final String mGetUserIdByTokenUrl = getFullUrl("/user/Id");
+    private final String mGetUserIdByTokenUrl = getFullUrl("/user/ID");
     private final String mGetUserByTokenUrl = getFullUrl("/user");
+
+    //是否第一次加载
+    private boolean isFirstLoading = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +46,27 @@ public class UserInfoActivity extends Activity {
         Map<String,String> getParams = new HashMap<>();
         getParams.put("token",token);
         String result = HttpRequestUtil.sendGet(mGetUserIdByTokenUrl,getParams,token);
-        if (result == null){
-            TextView textView = item2.findViewById(R.id.content_edt);
-            textView.setText("未绑定");
-            textView.setTextColor(0xff0000);
-            item2.findViewById(R.id.jt_right_iv).setVisibility(View.VISIBLE);
-        }else{
-            try {
-                String userInfo = HttpRequestUtil.sendGet(mGetUserByTokenUrl,getParams,token);
+        try {
+            String message = JsonUtil.stringToJsonObject(result).getString("message");
+            final String userInfo = HttpRequestUtil.sendGet(mGetUserByTokenUrl, getParams, token);
+            if (message == "null"){
+                TextView textView = item2.findViewById(R.id.content_edt);
+                textView.setText("未绑定");
+                textView.setTextColor(Color.rgb(255,0,0));
+                String number = JsonUtil.stringToJsonObject(userInfo).getJSONObject("user").getString("phone");
+                TextView textView3 = item3.findViewById(R.id.content_edt);
+                textView3.setText(number);
+                item2.findViewById(R.id.jt_right_iv).setVisibility(View.VISIBLE);
+
+                item2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(UserInfoActivity.this, BandMessageCard.class);
+                        startActivity(i);
+                    }
+                });
+            }else {
+
                 String name = JsonUtil.stringToJsonObject(userInfo).getJSONObject("user").getString("name");
                 String card = JsonUtil.stringToJsonObject(userInfo).getJSONObject("user").getString("id");
                 String number = JsonUtil.stringToJsonObject(userInfo).getJSONObject("user").getString("phone");
@@ -68,18 +77,12 @@ public class UserInfoActivity extends Activity {
                 textView2.setText(card);
                 textView3.setText(number);
                 item2.findViewById(R.id.jt_right_iv).setVisibility(View.GONE);
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
-        item2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(UserInfoActivity.this, BandMessageCard.class);
-                startActivity(i);
-            }
-        });
+
 
         CustomTitleBar titleBar = findViewById(R.id.titlebar_info);
         titleBar.setLeftIconOnClickListener(new View.OnClickListener() {
@@ -88,5 +91,17 @@ public class UserInfoActivity extends Activity {
                 UserInfoActivity.this.finish();
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!isFirstLoading) {
+            //如果不是第一次加载，刷新数据
+            this.recreate();
+        }
+
+        isFirstLoading = false;
     }
 }
