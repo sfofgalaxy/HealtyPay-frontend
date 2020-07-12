@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--个人信息界面（编辑资料界面）的每个item-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:paddingLeft="0dp">
+
+    <LinearLayout
+        android:id="@+id/card_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/bank_icon"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="0dp"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true" />
+
+        <TextView
+            android:id="@+id/bank_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="#ffffff"
+            android:textSize="25sp"
+            android:paddingLeft="20dp"
+            tools:text="身份信息" />
+
+        <TextView
+            android:id="@+id/bank_blank"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:layout_gravity="right"
+            android:background="@null"
+            android:hint=""
+            android:singleLine="true"
+            android:paddingRight="10dp"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+
+        <!--点击跳转或者弹出选择框-->
+        <Button
+            android:id="@+id/bank_unbind_button"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical|right"
+            android:background="#dedede"
+            android:layout_marginRight="20dp"
+            android:text="解绑"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dddddd" />
+</LinearLayout>
