@@ -183,8 +183,10 @@ public class LoginActivity extends Activity {
             postParams.put("phone",phone);
             postParams.put("captcha",captcha);
             String result =  HttpRequestUtil.sendPost(mLoginUrl, postParams);
-             if(result==null){
+             if(result==null||result.equals("")){
                  Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show();
+             }else if(!JsonUtil.stringToJsonObject(result).getBoolean("state")){
+                 Toast.makeText(this, JsonUtil.stringToJsonObject(result).getString("message"), Toast.LENGTH_SHORT).show();
              }else {
                  Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
                  SharedPreferencesUtil.putString(context,"token",JsonUtil.stringToJsonObject(result).getString("message"));
@@ -202,8 +204,9 @@ public class LoginActivity extends Activity {
         }else{
             char[] chars = phone.toCharArray();
             for(char a:chars){
-                if(a<'0'||a>'9'){
-                    valid=false;
+                if (a < '0' || a > '9') {
+                    valid = false;
+                    break;
                 }
             }
         }
