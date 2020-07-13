@@ -30,9 +30,9 @@ public class NFCFragment extends Fragment {
         trImageButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                ImageView imageView = root.findViewById(R.id.qrcodeBankSymbol);
+                ImageView imageView = root.findViewById(R.id.bankSymbol);
                 imageView.setImageResource(R.drawable.bus2);
-                TextView textView = root.findViewById(R.id.qrBankCard);
+                TextView textView = root.findViewById(R.id.bankCard);
                 Log.d("button", textView.getText().toString());
                 textView.setText("杭州公交乘车码");
             }
@@ -42,9 +42,9 @@ public class NFCFragment extends Fragment {
         payImageButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                ImageView imageView = root.findViewById(R.id.qrcodeBankSymbol);
+                ImageView imageView = root.findViewById(R.id.bankSymbol);
                 imageView.setImageResource(R.drawable.abc);
-                TextView textView = root.findViewById(R.id.qrBankCard);
+                TextView textView = root.findViewById(R.id.bankCard);
                 Log.d("button", textView.getText().toString());
                 textView.setText("农业银行储蓄卡");
             }
